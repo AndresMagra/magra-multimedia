@@ -1,0 +1,108 @@
+---
+const pasos = [
+  {
+    n: '01',
+    titulo: 'Diagnóstico',
+    texto: 'Conversamos por WhatsApp. Reviso tu presencia digital y te digo qué está fallando.',
+  },
+  {
+    n: '02',
+    titulo: 'Propuesta',
+    texto: 'Te envío un plan con alcance, tiempos y precio. En 48 horas.',
+  },
+  {
+    n: '03',
+    titulo: 'Producción',
+    texto: 'Trabajo por etapas con aprobación en cada una. Ves avances, no promesas.',
+  },
+  {
+    n: '04',
+    titulo: 'Optimización',
+    texto: 'Medimos qué funciona y ajustamos. El trabajo no termina al entregar.',
+  },
+];
+---
+
+<section class="section proceso" id="proceso">
+  <div class="wrap">
+    <p class="eyebrow reveal">Cómo trabajo</p>
+    <h2 class="proceso__title reveal" style="--i:1">Sin sorpresas y sin cotizaciones eternas.</h2>
+
+    <ol class="proceso__list">
+      {
+        pasos.map((p, i) => (
+          <li class="paso reveal" style={`--i:${i + 2}`}>
+            <span class="paso__n">{p.n}</span>
+            <h3 class="paso__title">{p.titulo}</h3>
+            <p class="paso__text">{p.texto}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .proceso__title {
+    font-size: var(--fs-h2);
+    margin-block-end: clamp(2.5rem, 6vw, 4rem);
+    max-width: 18ch;
+  }
+
+  .proceso__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: clamp(2rem, 5vw, 3rem);
+    counter-reset: paso;
+  }
+
+  .paso {
+    position: relative;
+    padding-block-start: 1.6rem;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .paso::before {
+    content: '';
+    position: absolute;
+    inset-block-start: -1px;
+    inset-inline-start: 0;
+    width: 34px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .paso__n {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    display: block;
+    margin-block-end: 0.7rem;
+  }
+
+  .paso__title {
+    font-size: var(--fs-h3);
+    margin-block-end: 0.55rem;
+  }
+
+  .paso__text {
+    color: var(--text-dim);
+    font-size: var(--fs-small);
+    max-width: 34ch;
+  }
+
+  @media (min-width: 760px) {
+    .proceso__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .proceso__list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

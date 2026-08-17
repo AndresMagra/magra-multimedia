@@ -1,0 +1,67 @@
+---
+// This section carries the whole no-track-record problem. The argument is not
+// "trust me" — it's "I'll give you value before you pay anything", which is the
+// only credible move when there are no testimonials to point at yet.
+---
+
+<section class="section porque" id="por-que">
+  <div class="wrap porque__grid">
+    <div class="porque__head">
+      <p class="eyebrow reveal">Por qué yo</p>
+      <h2 class="porque__title reveal" style="--i:1">
+        No te pido que confíes.<br /><span class="gold-text">Te pido diez minutos.</span>
+      </h2>
+    </div>
+
+    <div class="porque__body prose">
+      <p class="reveal" style="--i:2">
+        Magra MultiMedia es un estudio pequeño y deliberadamente selectivo. No hay ejecutivos de
+        cuenta ni intermediarios: hablas directamente con quien hace el trabajo, siempre.
+      </p>
+      <p class="reveal" style="--i:3">
+        Uso las herramientas más avanzadas que existen hoy —incluida la inteligencia artificial—
+        para producir en días lo que una agencia tradicional cotiza en meses. Eso baja el costo y
+        sube la velocidad, sin bajar el estándar.
+      </p>
+      <p class="reveal porque__kicker" style="--i:4">
+        Y antes de que pagues nada, te doy valor: escríbeme y te digo con honestidad qué haría yo
+        con tu negocio.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .porque {
+    background: var(--bg-elev);
+    border-block: 1px solid var(--line-soft);
+  }
+
+  .porque__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .porque__title {
+    font-size: var(--fs-h2);
+  }
+
+  .porque__body p {
+    color: var(--text-dim);
+    margin-block-end: 1.3rem;
+  }
+
+  .porque__kicker {
+    color: var(--text) !important;
+    font-size: var(--fs-lead);
+    padding-inline-start: 1.4rem;
+    border-inline-start: 1px solid var(--gold);
+  }
+
+  @media (min-width: 900px) {
+    .porque__grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

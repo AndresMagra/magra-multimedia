@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Problema from '../components/Problema.astro';
+import Servicios from '../components/Servicios.astro';
+import Proceso from '../components/Proceso.astro';
+import PorQue from '../components/PorQue.astro';
+import FAQ from '../components/FAQ.astro';
+import Cierre from '../components/Cierre.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import DiagnosticoDialog from '../components/DiagnosticoDialog.astro';
+import { SITE, WHATSAPP_NUMBER } from '../config';
+
+const title = 'Magra MultiMedia — Video, sitios web y campañas que venden';
+const description =
+  'Estudio de marketing para negocios que ya venden y quieren vender más. Video publicitario, sitios web y gestión de campañas en Google y Meta. Trabajo remoto en toda Latinoamérica.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: SITE.name,
+  description,
+  url: SITE.url,
+  areaServed: 'Latin America',
+  telephone: `+${WHATSAPP_NUMBER}`,
+  serviceType: [
+    'Producción de video publicitario',
+    'Diseño y desarrollo web',
+    'Gestión de campañas publicitarias',
+  ],
+};
+---
+
+<Base title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <Nav />
+  <main>
+    <Hero />
+    <Problema />
+    <Servicios />
+    <Proceso />
+    <PorQue />
+    <FAQ />
+    <Cierre />
+  </main>
+  <Footer />
+
+  <StickyBar />
+  <DiagnosticoDialog />
+</Base>

@@ -1,0 +1,155 @@
+---
+import { SITE } from '../config';
+---
+
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a href="/" class="nav__brand" aria-label={`${SITE.name} — inicio`}>
+      <span class="nav__mark" aria-hidden="true">MM</span>
+      <span class="nav__name">Magra <em>MultiMedia</em></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#por-que">Por qué</a>
+      <a href="#faq">Preguntas</a>
+    </nav>
+
+    <div class="nav__right">
+      <!-- English lands in v1.1; the route exists so the toggle is not a lie later. -->
+      <button class="nav__lang" type="button" data-lang-toggle aria-label="Switch to English" disabled>
+        EN
+      </button>
+      <button class="btn nav__cta" type="button" data-open-diagnostico data-source="nav">
+        Pedir diagnóstico
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 60;
+    transition: background 0.5s var(--ease), border-color 0.5s var(--ease);
+    border-block-end: 1px solid transparent;
+  }
+
+  .nav.is-stuck {
+    background: rgba(11, 11, 12, 0.82);
+    backdrop-filter: blur(14px);
+    border-block-end-color: var(--line-soft);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    min-height: 72px;
+  }
+
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .nav__mark {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    background: var(--gold-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .nav__name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    color: var(--text);
+  }
+
+  .nav__name em {
+    font-style: normal;
+    color: var(--gold-light);
+  }
+
+  .nav__links {
+    display: none;
+    gap: 2.1rem;
+    font-size: var(--fs-small);
+    color: var(--text-dim);
+  }
+
+  .nav__links a {
+    position: relative;
+    transition: color 0.4s var(--ease);
+  }
+
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    inset-block-end: -6px;
+    inset-inline: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .nav__links a:hover {
+    color: var(--text);
+  }
+
+  .nav__links a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .nav__lang {
+    background: none;
+    border: 1px solid var(--line-soft);
+    color: var(--text-faint);
+    font-size: var(--fs-micro);
+    letter-spacing: 0.12em;
+    padding: 0.45rem 0.7rem;
+    border-radius: var(--radius);
+    cursor: not-allowed;
+    font-family: var(--font-body);
+  }
+
+  .nav__cta {
+    display: none;
+    padding: 0.75rem 1.3rem;
+  }
+
+  @media (min-width: 900px) {
+    .nav__links,
+    .nav__cta {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav');
+  if (nav) {
+    const onScroll = () => nav.classList.toggle('is-stuck', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

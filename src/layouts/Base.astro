@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import { SITE, ANALYTICS } from '../config';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+---
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="es_419" />
+    <meta property="og:image" content={`${SITE.url}/img/hero-poster.jpg`} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300..600&display=swap"
+    />
+
+    <!-- Poster is the LCP candidate when autoplay is blocked (common in the
+         iOS Instagram in-app browser), so it gets preloaded. -->
+    <link rel="preload" as="image" href="/img/hero-poster.jpg" />
+
+    <script is:inline>
+      // Flip off no-js before paint so .reveal elements don't flash visible.
+      document.documentElement.classList.remove('no-js');
+      document.documentElement.classList.add('js');
+    </script>
+
+    {
+      ANALYTICS.ga4 && (
+        <>
+          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.ga4}`} />
+          <script is:inline define:vars={{ id: ANALYTICS.ga4 }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', id);
+          </script>
+        </>
+      )
+    }
+
+    {
+      ANALYTICS.metaPixel && (
+        <script is:inline define:vars={{ id: ANALYTICS.metaPixel }}>
+          !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+          n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+          (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', id); fbq('track', 'PageView');
+        </script>
+      )
+    }
+  </head>
+
+  <body>
+    <slot />
+
+    <script>
+      import { initReveal, initScrollDepth, initFaqTracking } from '../scripts/reveal';
+      import { captureUtms } from '../scripts/tracking';
+
+      captureUtms();
+      initReveal();
+      initScrollDepth();
+      initFaqTracking();
+    </script>
+  </body>
+</html>

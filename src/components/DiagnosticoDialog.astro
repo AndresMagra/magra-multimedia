@@ -1,0 +1,283 @@
+---
+import { NEGOCIOS, PROBLEMAS, PUBLICIDAD, WHATSAPP_NUMBER, waDirectLink } from '../config';
+
+const steps = [
+  { key: 'negocio', pregunta: '¿Qué tipo de negocio tienes?', opciones: NEGOCIOS },
+  { key: 'problema', pregunta: '¿Qué te está frenando?', opciones: PROBLEMAS },
+  { key: 'publicidad', pregunta: '¿Ya inviertes en publicidad?', opciones: PUBLICIDAD },
+];
+---
+
+<dialog class="diag" id="diagnostico" aria-labelledby="diag-title">
+  <div class="diag__panel">
+    <button class="diag__close" type="button" data-diag-close aria-label="Cerrar">&times;</button>
+
+    <div class="diag__progress" aria-hidden="true">
+      {steps.map((_, i) => <span class="diag__dot" data-dot={i}></span>)}
+    </div>
+
+    <h2 id="diag-title" class="visually-hidden">Diagnóstico</h2>
+
+    {
+      steps.map((step, i) => (
+        <fieldset class="diag__step" data-step={i} hidden={i !== 0}>
+          <legend class="diag__q">{step.pregunta}</legend>
+          <div class="diag__opts">
+            {step.opciones.map((opt) => (
+              <button class="diag__opt" type="button" data-key={step.key} data-value={opt}>
+                {opt}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+      ))
+    }
+
+    <!-- Confirmation step: a real anchor so the tap opens WhatsApp without
+         tripping popup blockers. -->
+    <div class="diag__step diag__done" data-step="3" hidden>
+      <p class="diag__q">Listo. Te abro WhatsApp con tu información.</p>
+      <ul class="diag__summary" data-summary></ul>
+      <a class="btn diag__go" data-wa-link href={waDirectLink()} target="_blank" rel="noopener">
+        Abrir WhatsApp
+      </a>
+      <p class="diag__note">
+        Respondo personalmente. Sin costo ni compromiso.
+      </p>
+    </div>
+
+    <a class="diag__escape" href={waDirectLink()} target="_blank" rel="noopener" data-diag-direct>
+      Prefiero escribir directo
+    </a>
+  </div>
+</dialog>
+
+<style>
+  .diag {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    max-width: min(560px, 100vw);
+    width: 100%;
+    color: var(--text);
+  }
+
+  .diag::backdrop {
+    background: rgba(6, 6, 7, 0.82);
+    backdrop-filter: blur(6px);
+  }
+
+  .diag__panel {
+    position: relative;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.75rem, 5vw, 2.75rem);
+  }
+
+  .diag__close {
+    position: absolute;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 1rem;
+    background: none;
+    border: 0;
+    color: var(--text-faint);
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .diag__close:hover {
+    color: var(--text);
+  }
+
+  .diag__progress {
+    display: flex;
+    gap: 6px;
+    margin-block-end: 1.9rem;
+  }
+
+  .diag__dot {
+    height: 2px;
+    flex: 1;
+    background: var(--line-soft);
+    transition: background 0.5s var(--ease);
+  }
+
+  .diag__dot.is-done {
+    background: var(--gold);
+  }
+
+  .diag__step {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .diag__q {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    line-height: 1.15;
+    margin-block-end: 1.5rem;
+    padding: 0;
+  }
+
+  .diag__opts {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .diag__opt {
+    text-align: start;
+    padding: 0.95rem 1.15rem;
+    background: transparent;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    cursor: pointer;
+    transition: border-color 0.35s var(--ease), background 0.35s var(--ease), transform 0.35s var(--ease-out);
+  }
+
+  .diag__opt:hover {
+    border-color: var(--gold);
+    background: rgba(201, 162, 39, 0.06);
+    transform: translateX(3px);
+  }
+
+  .diag__summary {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.6rem;
+    display: grid;
+    gap: 0.35rem;
+    font-size: var(--fs-small);
+    color: var(--text-dim);
+  }
+
+  .diag__summary li::before {
+    content: '—';
+    color: var(--gold);
+    margin-inline-end: 0.6rem;
+  }
+
+  .diag__go {
+    width: 100%;
+  }
+
+  .diag__note {
+    font-size: var(--fs-micro);
+    color: var(--text-faint);
+    text-align: center;
+    margin-block-start: 0.9rem;
+  }
+
+  .diag__escape {
+    display: block;
+    text-align: center;
+    margin-block-start: 1.6rem;
+    font-size: var(--fs-micro);
+    color: var(--text-faint);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .diag__escape:hover {
+    color: var(--gold-light);
+  }
+
+  @media (max-width: 560px) {
+    .diag {
+      max-width: 100vw;
+      margin: auto auto 0;
+    }
+    .diag__panel {
+      border-inline: 0;
+      border-block-end: 0;
+    }
+  }
+</style>
+
+<script>
+  import { buildWaLink, trackWhatsappClick, track } from '../scripts/tracking';
+
+  const WA_NUMBER = '18098918185';
+
+  const dialog = document.getElementById('diagnostico') as HTMLDialogElement | null;
+  if (dialog) {
+    const answers: Record<string, string> = {};
+    let source = 'desconocido';
+
+    const stepEls = dialog.querySelectorAll<HTMLElement>('[data-step]');
+    const dots = dialog.querySelectorAll<HTMLElement>('[data-dot]');
+    const summaryEl = dialog.querySelector<HTMLElement>('[data-summary]');
+    const waLink = dialog.querySelector<HTMLAnchorElement>('[data-wa-link]');
+
+    const show = (index: number) => {
+      stepEls.forEach((el) => {
+        el.hidden = Number(el.dataset.step) !== index;
+      });
+      dots.forEach((dot, i) => dot.classList.toggle('is-done', i < index));
+    };
+
+    const reset = () => {
+      for (const key of Object.keys(answers)) delete answers[key];
+      show(0);
+    };
+
+    // Any CTA on the page opens the same dialog.
+    document.querySelectorAll<HTMLElement>('[data-open-diagnostico]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        source = btn.dataset.source ?? 'desconocido';
+        reset();
+        dialog.showModal();
+        track('diagnostico_abierto', { cta_source: source });
+      });
+    });
+
+    dialog.querySelector('[data-diag-close]')?.addEventListener('click', () => dialog.close());
+
+    // Click on the backdrop closes.
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    dialog.querySelectorAll<HTMLButtonElement>('.diag__opt').forEach((opt) => {
+      opt.addEventListener('click', () => {
+        const key = opt.dataset.key!;
+        answers[key] = opt.dataset.value!;
+
+        const stepIndex = Number(opt.closest('[data-step]')!.getAttribute('data-step'));
+        track(`diagnostico_paso_${stepIndex + 1}`, { [key]: answers[key], cta_source: source });
+
+        const next = stepIndex + 1;
+
+        if (next === 3) {
+          // Final step: build the link and the visible summary.
+          const { url } = buildWaLink(WA_NUMBER, answers);
+          if (waLink) waLink.href = url;
+          if (summaryEl) {
+            summaryEl.innerHTML = '';
+            for (const value of Object.values(answers)) {
+              const li = document.createElement('li');
+              li.textContent = value;
+              summaryEl.appendChild(li);
+            }
+          }
+        }
+        show(next);
+      });
+    });
+
+    // THE conversion event.
+    waLink?.addEventListener('click', () => {
+      trackWhatsappClick(answers, source);
+    });
+
+    dialog.querySelector('[data-diag-direct]')?.addEventListener('click', () => {
+      trackWhatsappClick(answers, `${source}_directo`);
+    });
+  }
+</script>

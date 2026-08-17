@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import DiagnosticoDialog from '../components/DiagnosticoDialog.astro';
+import { SITE } from '../config';
+
+// Meta requires a reachable privacy policy and can reject ads without one,
+// so this page is a launch requirement, not paperwork for later.
+const title = `Política de privacidad — ${SITE.name}`;
+const description = 'Cómo Magra MultiMedia recopila, usa y protege tu información.';
+---
+
+<Base title={title} description={description}>
+  <Nav />
+  <main class="section legal">
+    <div class="wrap prose">
+      <h1>Política de privacidad</h1>
+      <p class="dim">Última actualización: agosto de 2026</p>
+
+      <h2>Qué información recopilamos</h2>
+      <p>
+        Cuando usas el formulario de diagnóstico, recopilamos únicamente las respuestas que eliges
+        (tipo de negocio, principal dificultad y si inviertes en publicidad) y un código de
+        referencia interno. Esa información se envía a WhatsApp contigo como remitente.
+      </p>
+      <p>
+        También usamos herramientas de analítica (Google Analytics y el píxel de Meta) que
+        registran datos de navegación de forma agregada: páginas vistas, origen de la visita y
+        acciones dentro del sitio.
+      </p>
+
+      <h2>Para qué la usamos</h2>
+      <p>
+        Para responder tu consulta, entender qué anuncios y contenidos funcionan, y mejorar el
+        sitio. No vendemos ni cedemos tu información a terceros.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>
+        Este sitio usa cookies y almacenamiento local del navegador para medir el rendimiento de
+        las campañas publicitarias. Puedes bloquearlas desde la configuración de tu navegador sin
+        que el sitio deje de funcionar.
+      </p>
+
+      <h2>Tus derechos</h2>
+      <p>
+        Puedes solicitar el acceso, la corrección o la eliminación de tu información escribiéndonos
+        por WhatsApp. Atendemos cada solicitud de forma directa.
+      </p>
+
+      <h2>Contacto</h2>
+      <p>
+        Para cualquier duda sobre esta política, escríbenos por WhatsApp desde cualquier botón del
+        sitio.
+      </p>
+    </div>
+  </main>
+  <Footer />
+  <DiagnosticoDialog />
+</Base>
+
+<style>
+  .legal {
+    padding-block-start: calc(72px + var(--section-y));
+  }
+
+  .legal h1 {
+    font-size: var(--fs-h2);
+    margin-block-end: 0.6rem;
+  }
+
+  .legal h2 {
+    font-size: var(--fs-h3);
+    margin-block: 2.5rem 0.8rem;
+  }
+
+  .legal p {
+    color: var(--text-dim);
+    margin-block-end: 1rem;
+  }
+</style>

@@ -1,0 +1,93 @@
+---
+// Says exactly what happens when they message. "Free diagnosis" is vague and
+// cold traffic assumes it's a sales trap — removing that fear lifts click-through
+// more than any button treatment will.
+---
+
+<section class="section cierre" id="diagnostico-cta">
+  <div class="wrap cierre__inner">
+    <p class="eyebrow reveal">El diagnóstico</p>
+    <h2 class="cierre__title reveal" style="--i:1">¿Hablamos?</h2>
+
+    <p class="cierre__text lead reveal" style="--i:2">
+      Me escribes por WhatsApp. Te hago cuatro o cinco preguntas. Reviso tu sitio, tus redes y tus
+      anuncios. Te digo qué está fallando y qué haría yo — <em>sin presentación de ventas</em>.
+    </p>
+
+    <div class="cierre__actions reveal" style="--i:3">
+      <button class="btn" type="button" data-open-diagnostico data-source="cierre">
+        Pedir mi diagnóstico
+      </button>
+    </div>
+
+    <p class="cierre__micro reveal" style="--i:4">
+      Sin costo ni compromiso <span class="sep">·</span> Respondo personalmente
+    </p>
+  </div>
+</section>
+
+<style>
+  .cierre {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cierre::before {
+    /* Soft gold pool behind the final CTA — echoes the reel's last frame. */
+    content: '';
+    position: absolute;
+    inset-block-end: -40%;
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    width: min(900px, 120vw);
+    aspect-ratio: 2 / 1;
+    background: radial-gradient(ellipse at center, rgba(201, 162, 39, 0.13), transparent 68%);
+    pointer-events: none;
+  }
+
+  .cierre__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cierre__title {
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    margin-block-end: 1.4rem;
+  }
+
+  .cierre__text {
+    max-width: 52ch;
+    margin-inline: auto;
+    margin-block-end: 2.4rem;
+  }
+
+  .cierre__text em {
+    font-style: normal;
+    color: var(--gold-light);
+  }
+
+  .cierre__actions {
+    display: flex;
+    justify-content: center;
+    margin-block-end: 1.3rem;
+  }
+
+  .cierre__micro {
+    font-size: var(--fs-micro);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .cierre__micro .sep {
+    color: var(--gold);
+    margin-inline: 0.4rem;
+  }
+
+  @media (max-width: 640px) {
+    .cierre__actions .btn {
+      width: 100%;
+    }
+  }
+</style>

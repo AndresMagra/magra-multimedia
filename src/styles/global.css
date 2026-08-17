@@ -1,0 +1,308 @@
+/* =========================================================================
+   Magra MultiMedia — design system
+   Palette taken from the logo: champagne gold on near-black.
+   Gold is for headings and accents only; body copy stays off-white so it
+   survives small sizes on a phone.
+   ========================================================================= */
+
+:root {
+  /* Ground */
+  --bg: #0b0b0c;
+  --bg-elev: #121214;
+  --bg-elev-2: #17171a;
+
+  /* Gold ramp */
+  --gold-deep: #b8862f;
+  --gold: #c9a227;
+  --gold-light: #f4dfa0;
+  --gold-grad: linear-gradient(135deg, #b8862f 0%, #f4dfa0 45%, #c9a227 100%);
+
+  /* Type */
+  --text: #f5f2ec;
+  --text-dim: rgba(245, 242, 236, 0.62);
+  --text-faint: rgba(245, 242, 236, 0.38);
+
+  /* Lines & surfaces */
+  --line: rgba(244, 223, 160, 0.14);
+  --line-soft: rgba(245, 242, 236, 0.08);
+
+  /* Fonts */
+  --font-display: 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fluid type scale */
+  --fs-hero: clamp(2.6rem, 9vw, 6.5rem);
+  --fs-h2: clamp(1.9rem, 5vw, 3.4rem);
+  --fs-h3: clamp(1.25rem, 2.4vw, 1.6rem);
+  --fs-lead: clamp(1.05rem, 2.1vw, 1.3rem);
+  --fs-body: clamp(1rem, 1.6vw, 1.08rem);
+  --fs-small: 0.875rem;
+  --fs-micro: 0.78rem;
+
+  /* Rhythm */
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --section-y: clamp(4.5rem, 11vw, 9rem);
+  --maxw: 1240px;
+  --maxw-prose: 62ch;
+
+  /* Motion — slow and confident. Nothing bouncy. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.7s;
+
+  --radius: 2px; /* Sharp. Rounded corners read friendly, not premium. */
+}
+
+/* ---------- base ---------- */
+
+html {
+  background: var(--bg);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  font-weight: 380;
+  letter-spacing: 0.005em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--gold);
+  color: #0b0b0c;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+/* ---------- layout ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+  position: relative;
+}
+
+.prose {
+  max-width: var(--maxw-prose);
+}
+
+/* ---------- type helpers ---------- */
+
+.eyebrow {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.gold-text {
+  background: var(--gold-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.dim {
+  color: var(--text-dim);
+}
+
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--line), transparent);
+  border: 0;
+  margin: 0;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  --btn-bg: var(--gold-grad);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.05rem 1.9rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 560;
+  letter-spacing: 0.04em;
+  border: 0;
+  border-radius: var(--radius);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background: var(--btn-bg);
+  color: #0b0b0c;
+  transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out);
+  will-change: transform;
+}
+
+.btn::after {
+  /* Slow gold sweep on hover — echoes the logo's metallic finish. */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.9s var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px -12px rgba(201, 162, 39, 0.55);
+}
+
+.btn:hover::after {
+  transform: translateX(120%);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.btn--ghost:hover {
+  border-color: var(--gold);
+  box-shadow: none;
+}
+
+.btn--ghost::after {
+  display: none;
+}
+
+/* ---------- reveal on scroll ----------
+   IntersectionObserver + CSS only. No animation library: most traffic lands
+   in the Instagram/Facebook in-app browser on mid-range Android, where a
+   scroll-jacking library costs more than it returns.
+
+   FAIL OPEN. Content is visible by default; JS opts in to hiding it only
+   after confirming IntersectionObserver exists. If the observer never fires —
+   old in-app webview, JS error, blocked bundle — the page still reads
+   perfectly instead of rendering 39 invisible elements. */
+
+html.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+html.js-reveal .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html.js-reveal .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- hero entrance ----------
+   Pure CSS, no JS dependency. The H1 animates transform only and never drops
+   below opacity 1 — it is the LCP element, and fading it in would push Largest
+   Contentful Paint back by the length of the animation. */
+
+.hero-in {
+  animation: heroIn 0.85s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 110ms);
+}
+
+.hero-in--lcp {
+  animation-name: heroInLcp;
+  animation-duration: 0.7s;
+  animation-delay: 0s;
+}
+
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes heroInLcp {
+  from { transform: translateY(14px); }
+  to { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-in,
+  .hero-in--lcp {
+    animation: none;
+  }
+}
+
+/* ---------- utility ---------- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
