@@ -53,6 +53,26 @@
   --radius: 2px; /* Sharp. Rounded corners read friendly, not premium. */
 }
 
+/* ---------- reset ---------- */
+
+/* Without this, max-width + padding-inline overflows every .wrap container.
+   body overflow-x:hidden was masking it by clipping the right gutter. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
 /* ---------- base ---------- */
 
 html {

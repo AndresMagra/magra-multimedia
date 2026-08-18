@@ -1,0 +1,362 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import StickyBar from '../../components/StickyBar.astro';
+import DiagnosticoDialog from '../../components/DiagnosticoDialog.astro';
+
+// Doubles as the paid-traffic landing page. Video leads the ad spend because
+// it's the fastest thing to deliver and it upsells naturally into campaigns
+// and web. Keep the argument on outcome and speed; AI is method, not identity.
+
+const title = 'Video y anuncios — Magra MultiMedia';
+const description =
+  'Anuncios en video listos para publicar, producidos en días. Piezas que detienen el scroll y llevan a una conversación, no solo a una vista.';
+
+const entregables = [
+  {
+    n: '01',
+    titulo: 'Anuncio en video',
+    texto:
+      'Una pieza de quince a treinta segundos, lista para Meta, Instagram o YouTube, con las variantes verticales que necesites.',
+  },
+  {
+    n: '02',
+    titulo: 'Variantes para probar',
+    texto:
+      'Distintos ganchos sobre la misma pieza. Un anuncio no se prueba solo: se prueban tres y el mercado decide.',
+  },
+  {
+    n: '03',
+    titulo: 'Formato para cada canal',
+    texto:
+      'Vertical para reels y stories, horizontal para YouTube, cuadrado para feed. Una sola producción, todos los cortes.',
+  },
+];
+
+const proceso = [
+  { dia: 'Día 1', texto: 'Diagnóstico y guion. Definimos qué vendes y cuál es el gancho.' },
+  { dia: 'Días 2 a 4', texto: 'Producción. Ves un primer corte antes de que esté terminado.' },
+  { dia: 'Días 5 a 7', texto: 'Ajustes, variantes y entrega en todos los formatos.' },
+];
+
+const faqs = [
+  {
+    id: 'video_precio',
+    q: '¿Cuánto cuesta un anuncio?',
+    a: 'Depende del alcance y de cuántas variantes necesites. Te doy un precio cerrado en la propuesta, en 48 horas, y no cambia después.',
+  },
+  {
+    id: 'video_ia',
+    q: '¿Esto se hace con inteligencia artificial?',
+    a: 'En parte, sí. Es lo que permite producir en días lo que antes tomaba semanas y costaba varias veces más. Las decisiones de qué se dice, a quién y con qué gancho siguen siendo mías.',
+  },
+  {
+    id: 'video_material',
+    q: '¿Necesito tener material grabado?',
+    a: 'No necesariamente. Si tienes fotos o video de tu negocio, mejor. Si no, se puede producir la pieza completa desde cero.',
+  },
+  {
+    id: 'video_campana',
+    q: '¿También corres la campaña?',
+    a: 'Sí, si quieres. Muchos empiezan con una pieza y luego me dejan la gestión de los anuncios. También puedes llevártela y correrla tú.',
+  },
+];
+---
+
+<Base title={title} description={description}>
+  <Nav />
+
+  <main class="svc">
+    <section class="section svc-hero">
+      <div class="wrap">
+        <p class="eyebrow reveal">Video y anuncios</p>
+        <h1 class="svc-hero__title reveal" style="--i:1">
+          Un anuncio que vende,<br /><span class="gold-text">listo en una semana.</span>
+        </h1>
+        <p class="lead prose reveal" style="--i:2">
+          La mayoría de los negocios no necesita más publicaciones. Necesita una pieza buena que
+          detenga el scroll y lleve a una conversación. Eso es lo que produzco.
+        </p>
+        <div class="svc-hero__cta reveal" style="--i:3">
+          <button class="btn" type="button" data-open-diagnostico data-source="svc_video_hero">
+            Hablar de mi anuncio
+          </button>
+        </div>
+        <p class="svc-hero__micro reveal" style="--i:4">
+          Sin costo ni compromiso <span class="sep">·</span> Respuesta el mismo día
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow reveal">Qué recibes</p>
+        <div class="svc-grid">
+          {
+            entregables.map((e, i) => (
+              <article class="svc-card reveal" style={`--i:${i + 1}`}>
+                <span class="svc-card__n">{e.n}</span>
+                <h2 class="svc-card__title">{e.titulo}</h2>
+                <p class="svc-card__text">{e.texto}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section svc-proceso">
+      <div class="wrap">
+        <p class="eyebrow reveal">Una semana, de principio a fin</p>
+        <h2 class="svc-h2 reveal" style="--i:1">Sabes en qué día está tu proyecto.</h2>
+        <ol class="svc-timeline">
+          {
+            proceso.map((p, i) => (
+              <li class="svc-tl reveal" style={`--i:${i + 2}`}>
+                <span class="svc-tl__dia">{p.dia}</span>
+                <p class="svc-tl__text">{p.texto}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap svc-faq">
+        <h2 class="svc-h2 reveal">Preguntas sobre video.</h2>
+        <div>
+          {
+            faqs.map((f, i) => (
+              <details class="svc-faq__item reveal" style={`--i:${i + 1}`} data-faq={f.id}>
+                <summary class="svc-faq__q">
+                  <span>{f.q}</span>
+                  <span class="svc-faq__icon" aria-hidden="true"></span>
+                </summary>
+                <p class="svc-faq__a">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section svc-cierre">
+      <div class="wrap">
+        <h2 class="svc-cierre__title reveal">¿Empezamos con una pieza?</h2>
+        <p class="lead reveal" style="--i:1">
+          Escríbeme y te digo qué haría con tu negocio antes de que pagues nada.
+        </p>
+        <div class="svc-cierre__cta reveal" style="--i:2">
+          <button class="btn" type="button" data-open-diagnostico data-source="svc_video_cierre">
+            Pedir mi diagnóstico
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <StickyBar />
+  <DiagnosticoDialog />
+</Base>
+
+<style>
+  .svc-hero {
+    padding-block-start: calc(72px + var(--section-y));
+  }
+
+  .svc-hero__title {
+    font-size: clamp(2.5rem, 7vw, 4.8rem);
+    margin-block-end: 1.4rem;
+  }
+
+  .svc-hero__cta {
+    margin-block-start: 2.2rem;
+    margin-block-end: 1.2rem;
+  }
+
+  .svc-hero__micro {
+    font-size: var(--fs-micro);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .svc-hero__micro .sep {
+    color: var(--gold);
+    margin-inline: 0.4rem;
+  }
+
+  .svc-h2 {
+    font-size: var(--fs-h2);
+    margin-block-end: clamp(2rem, 5vw, 3rem);
+  }
+
+  .svc-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--line-soft);
+    border: 1px solid var(--line-soft);
+  }
+
+  .svc-card {
+    background: var(--bg);
+    padding: clamp(1.6rem, 4vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .svc-card__n {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    letter-spacing: 0.14em;
+    color: var(--gold);
+  }
+
+  .svc-card__title {
+    font-size: var(--fs-h3);
+  }
+
+  .svc-card__text {
+    color: var(--text-dim);
+    font-size: var(--fs-small);
+    margin: 0;
+  }
+
+  .svc-proceso {
+    background: var(--bg-elev);
+    border-block: 1px solid var(--line-soft);
+  }
+
+  .svc-timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .svc-tl {
+    display: flex;
+    gap: clamp(1rem, 4vw, 3rem);
+    align-items: baseline;
+    padding-block: 1.5rem;
+    border-block-end: 1px solid var(--line-soft);
+  }
+
+  .svc-tl__dia {
+    font-family: var(--font-display);
+    color: var(--gold);
+    font-size: var(--fs-small);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    min-width: 8ch;
+  }
+
+  .svc-tl__text {
+    color: var(--text-dim);
+    font-size: var(--fs-small);
+    margin: 0;
+  }
+
+  .svc-faq {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .svc-faq__item {
+    border-block-end: 1px solid var(--line-soft);
+  }
+
+  .svc-faq__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.2rem;
+    cursor: pointer;
+    list-style: none;
+    font-size: var(--fs-body);
+  }
+
+  .svc-faq__q::-webkit-details-marker {
+    display: none;
+  }
+
+  .svc-faq__q:hover {
+    color: var(--gold-light);
+  }
+
+  .svc-faq__icon {
+    position: relative;
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+
+  .svc-faq__icon::before,
+  .svc-faq__icon::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+    transition: transform 0.45s var(--ease-out);
+  }
+
+  .svc-faq__icon::before {
+    inset-block-start: 6px;
+    inset-inline: 0;
+    height: 1px;
+  }
+
+  .svc-faq__icon::after {
+    inset-inline-start: 6px;
+    inset-block: 0;
+    width: 1px;
+  }
+
+  .svc-faq__item[open] .svc-faq__icon::after {
+    transform: scaleY(0);
+  }
+
+  .svc-faq__a {
+    color: var(--text-dim);
+    font-size: var(--fs-small);
+    max-width: 62ch;
+    padding-block-end: 1.4rem;
+    margin: 0;
+  }
+
+  .svc-cierre {
+    text-align: center;
+  }
+
+  .svc-cierre__title {
+    font-size: var(--fs-h2);
+    margin-block-end: 1rem;
+  }
+
+  .svc-cierre__cta {
+    margin-block-start: 2rem;
+  }
+
+  @media (min-width: 900px) {
+    .svc-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .svc-faq {
+      grid-template-columns: 0.8fr 1.2fr;
+      align-items: start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .svc-hero__cta .btn,
+    .svc-cierre__cta .btn {
+      width: 100%;
+    }
+  }
+</style>

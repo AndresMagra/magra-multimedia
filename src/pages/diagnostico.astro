@@ -1,0 +1,255 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import DiagnosticoDialog from '../components/DiagnosticoDialog.astro';
+
+// Cold traffic assumes "diagnóstico gratis" is bait for a sales call. This page
+// exists to kill that assumption by saying exactly what happens — including
+// what does NOT happen. Removing the fear of being pitched lifts click-through
+// more than any button treatment.
+
+const title = 'El diagnóstico — Magra MultiMedia';
+const description =
+  'Qué pasa exactamente cuando me escribes: cuatro o cinco preguntas, una revisión de tu presencia digital y una respuesta honesta. Sin presentación de ventas.';
+
+const pasos = [
+  {
+    n: '01',
+    titulo: 'Me escribes por WhatsApp',
+    texto:
+      'Con cualquier botón de esta página. El mensaje se arma solo con tu tipo de negocio y tu principal dificultad, así no tienes que explicar todo desde cero.',
+  },
+  {
+    n: '02',
+    titulo: 'Te hago cuatro o cinco preguntas',
+    texto:
+      'Qué vendes, a quién, qué has intentado antes y qué resultado necesitas. Nada de formularios largos.',
+  },
+  {
+    n: '03',
+    titulo: 'Reviso tu presencia digital',
+    texto:
+      'Tu sitio, tus redes y tus anuncios si los tienes. Con calma y por mi cuenta, no mientras conversamos.',
+  },
+  {
+    n: '04',
+    titulo: 'Te digo qué haría yo',
+    texto:
+      'Qué está fallando, qué arreglaría primero y qué impacto esperaría. Si lo puedes resolver sin mí, te lo digo también.',
+  },
+];
+
+const noEs = [
+  'No es una llamada de ventas de cuarenta y cinco minutos.',
+  'No te voy a pedir datos de tarjeta ni de pago.',
+  'No tienes ninguna obligación de contratarme después.',
+];
+
+const necesito = [
+  'Diez minutos de tu tiempo, repartidos como te quede cómodo.',
+  'Acceso a lo que ya tienes publicado: sitio, redes, anuncios.',
+  'Honestidad sobre tu presupuesto, para no hacerte perder el tiempo.',
+];
+---
+
+<Base title={title} description={description}>
+  <Nav />
+
+  <main class="diag-page">
+    <section class="section dp-hero">
+      <div class="wrap">
+        <p class="eyebrow reveal">Sin costo ni compromiso</p>
+        <h1 class="dp-hero__title reveal" style="--i:1">El diagnóstico</h1>
+        <p class="lead prose reveal" style="--i:2">
+          Es una conversación por WhatsApp donde reviso tu negocio y te digo con honestidad qué
+          haría yo. Esto es exactamente lo que pasa, paso por paso.
+        </p>
+        <div class="dp-hero__cta reveal" style="--i:3">
+          <button class="btn" type="button" data-open-diagnostico data-source="diagnostico_hero">
+            Empezar por WhatsApp
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dp-pasos">
+      <div class="wrap">
+        <ol class="dp-list">
+          {
+            pasos.map((p, i) => (
+              <li class="dp-paso reveal" style={`--i:${i}`}>
+                <span class="dp-paso__n">{p.n}</span>
+                <div>
+                  <h2 class="dp-paso__title">{p.titulo}</h2>
+                  <p class="dp-paso__text">{p.texto}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section dp-split">
+      <div class="wrap dp-split__grid">
+        <div class="reveal">
+          <p class="eyebrow">Qué no es</p>
+          <ul class="dp-ul dp-ul--no">
+            {noEs.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+        <div class="reveal" style="--i:1">
+          <p class="eyebrow">Qué necesito de ti</p>
+          <ul class="dp-ul dp-ul--si">
+            {necesito.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dp-cierre">
+      <div class="wrap">
+        <h2 class="dp-cierre__title reveal">
+          Si al final te digo que no me necesitas,<br /><span class="gold-text">también es una respuesta útil.</span>
+        </h2>
+        <div class="dp-cierre__cta reveal" style="--i:1">
+          <button class="btn" type="button" data-open-diagnostico data-source="diagnostico_cierre">
+            Pedir mi diagnóstico
+          </button>
+        </div>
+        <p class="dp-cierre__micro reveal" style="--i:2">Respondo personalmente</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <StickyBar />
+  <DiagnosticoDialog />
+</Base>
+
+<style>
+  .dp-hero {
+    padding-block-start: calc(72px + var(--section-y));
+    padding-block-end: 0;
+  }
+
+  .dp-hero__title {
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    margin-block-end: 1.3rem;
+  }
+
+  .dp-hero__cta {
+    margin-block-start: 2.2rem;
+  }
+
+  .dp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .dp-paso {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(1rem, 4vw, 3rem);
+    padding-block: clamp(1.6rem, 4vw, 2.4rem);
+    border-block-end: 1px solid var(--line-soft);
+  }
+
+  .dp-paso__n {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .dp-paso__title {
+    font-size: var(--fs-h3);
+    margin-block-end: 0.5rem;
+  }
+
+  .dp-paso__text {
+    color: var(--text-dim);
+    font-size: var(--fs-small);
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  .dp-split {
+    background: var(--bg-elev);
+    border-block: 1px solid var(--line-soft);
+  }
+
+  .dp-split__grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .dp-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+    color: var(--text-dim);
+    font-size: var(--fs-small);
+    max-width: 46ch;
+  }
+
+  .dp-ul li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+  }
+
+  .dp-ul li::before {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+  }
+
+  .dp-ul--no li::before {
+    content: '×';
+    color: var(--text-faint);
+  }
+
+  .dp-ul--si li::before {
+    content: '—';
+    color: var(--gold);
+  }
+
+  .dp-cierre {
+    text-align: center;
+  }
+
+  .dp-cierre__title {
+    font-size: var(--fs-h2);
+    margin-block-end: 2.2rem;
+  }
+
+  .dp-cierre__micro {
+    font-size: var(--fs-micro);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-block-start: 1.2rem;
+  }
+
+  @media (min-width: 860px) {
+    .dp-split__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dp-hero__cta .btn,
+    .dp-cierre__cta .btn {
+      width: 100%;
+    }
+  }
+</style>
