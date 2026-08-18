@@ -1,4 +1,6 @@
 ---
+import { url } from '../config';
+
 // The gold loop is texture, not proof — the headline says what we do, the
 // footage says what tier we're in. Poster must look finished on its own
 // because iOS in-app browsers routinely block autoplay.
@@ -8,8 +10,8 @@
   <div class="hero__media" aria-hidden="true">
     <video
       class="hero__video"
-      src="/video/hero-loop.mp4"
-      poster="/img/hero-poster.jpg"
+      src={url("/video/hero-loop.mp4")}
+      poster={url("/img/hero-poster.jpg")}
       autoplay
       muted
       loop
@@ -35,7 +37,7 @@
       <button class="btn" type="button" data-open-diagnostico data-source="hero">
         Pedir mi diagnóstico
       </button>
-      <a class="btn btn--ghost" href="/#servicios">Ver servicios</a>
+      <a class="btn btn--ghost" href={url("/#servicios")}>Ver servicios</a>
     </div>
 
     <p class="hero__micro hero-in" style="--i:3">

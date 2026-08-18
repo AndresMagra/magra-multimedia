@@ -1,20 +1,20 @@
 ---
-import { SITE } from '../config';
+import { SITE, url } from '../config';
 ---
 
 <header class="nav" id="nav">
   <div class="wrap nav__inner">
-    <a href="/" class="nav__brand" aria-label={`${SITE.name} — inicio`}>
+    <a href={url()} class="nav__brand" aria-label={`${SITE.name} — inicio`}>
       <span class="nav__mark" aria-hidden="true">MM</span>
       <span class="nav__name">Magra <em>MultiMedia</em></span>
     </a>
 
     <nav class="nav__links" aria-label="Principal">
-      <a href="/#servicios">Servicios</a>
-      <a href="/#proceso">Proceso</a>
-      <a href="/#por-que">Por qué</a>
-      <a href="/diagnostico">Diagnóstico</a>
-      <a href="/#faq">Preguntas</a>
+      <a href={url('/#servicios')}>Servicios</a>
+      <a href={url('/#proceso')}>Proceso</a>
+      <a href={url('/#por-que')}>Por qué</a>
+      <a href={url('/diagnostico')}>Diagnóstico</a>
+      <a href={url('/#faq')}>Preguntas</a>
     </nav>
 
     <div class="nav__right">

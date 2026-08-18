@@ -51,3 +51,14 @@ export function waDirectLink(): string {
   const texto = encodeURIComponent('Hola Magra. Quiero el diagnóstico.');
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${texto}`;
 }
+
+/**
+ * Prefixes an app-absolute path with the deploy base path.
+ * GitHub Pages project sites live at /<repo>/; a custom domain lives at /.
+ * Always route internal links and asset URLs through this.
+ */
+export function url(path = '/'): string {
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  if (path === '/') return base || '/';
+  return `${base}${path.startsWith('/') ? path : `/${path}`}`;
+}

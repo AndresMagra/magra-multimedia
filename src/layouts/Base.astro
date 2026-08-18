@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, ANALYTICS } from '../config';
+import { SITE, ANALYTICS, url } from '../config';
 
 interface Props {
   title: string;
@@ -25,7 +25,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="es_419" />
-    <meta property="og:image" content={`${SITE.url}/img/hero-poster.jpg`} />
+    <meta property="og:image" content={new URL(url("/img/hero-poster.jpg"), Astro.site ?? SITE.url).href} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,7 +37,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
 
     <!-- Poster is the LCP candidate when autoplay is blocked (common in the
          iOS Instagram in-app browser), so it gets preloaded. -->
-    <link rel="preload" as="image" href="/img/hero-poster.jpg" />
+    <link rel="preload" as="image" href={url("/img/hero-poster.jpg")} />
 
     <script is:inline>
       // Flip off no-js before paint so .reveal elements don't flash visible.

@@ -1,12 +1,16 @@
 import { defineConfig } from 'astro/config';
 
-export default defineConfig({
-  // Swap to the real domain once it's registered. Cloudflare Pages serves
-  // at the root path, so no `base` is needed (this is what bit us on gh-pages).
-  site: 'https://magramultimedia.com',
+// GitHub Pages project sites serve from /<repo>/, so `base` is required or
+// every asset and internal link 404s. Everything in src/ builds URLs through
+// url() in config.ts, which reads import.meta.env.BASE_URL — so moving to a
+// real domain later means setting base back to '/' here and nothing else.
+const BASE = process.env.PUBLIC_BASE ?? '/magra-multimedia';
 
-  // i18n architecture lands on day one even though /en/ content ships in v1.1 —
-  // retrofitting locale routing into Astro later is painful.
+export default defineConfig({
+  site: 'https://andresmagra.github.io',
+  base: BASE,
+  trailingSlash: 'ignore',
+
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],

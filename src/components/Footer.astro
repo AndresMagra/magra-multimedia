@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../config';
+import { SITE, url } from '../config';
 const year = new Date().getFullYear();
 ---
 
@@ -13,13 +13,13 @@ const year = new Date().getFullYear();
     </div>
 
     <nav class="footer__nav" aria-label="Pie de página">
-      <a href="/#servicios">Servicios</a>
-      <a href="/#proceso">Proceso</a>
-      <a href="/#por-que">Por qué</a>
-      <a href="/#faq">Preguntas</a>
-      <a href="/servicios/video-y-anuncios">Video y anuncios</a>
-      <a href="/diagnostico">Diagnóstico</a>
-      <a href="/privacidad">Privacidad</a>
+      <a href={url('/#servicios')}>Servicios</a>
+      <a href={url('/#proceso')}>Proceso</a>
+      <a href={url('/#por-que')}>Por qué</a>
+      <a href={url('/#faq')}>Preguntas</a>
+      <a href={url('/servicios/video-y-anuncios')}>Video y anuncios</a>
+      <a href={url('/diagnostico')}>Diagnóstico</a>
+      <a href={url('/privacidad')}>Privacidad</a>
     </nav>
   </div>
 

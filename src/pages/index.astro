@@ -11,7 +11,7 @@ import Cierre from '../components/Cierre.astro';
 import Footer from '../components/Footer.astro';
 import StickyBar from '../components/StickyBar.astro';
 import DiagnosticoDialog from '../components/DiagnosticoDialog.astro';
-import { SITE, WHATSAPP_NUMBER } from '../config';
+import { SITE, WHATSAPP_NUMBER, url } from '../config';
 
 const title = 'Magra MultiMedia — Video, sitios web y campañas que venden';
 const description =
@@ -22,7 +22,7 @@ const schema = {
   '@type': 'ProfessionalService',
   name: SITE.name,
   description,
-  url: SITE.url,
+  url: new URL(url('/'), Astro.site ?? SITE.url).href,
   areaServed: 'Latin America',
   telephone: `+${WHATSAPP_NUMBER}`,
   serviceType: [
