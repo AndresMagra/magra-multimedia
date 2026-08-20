@@ -316,6 +316,13 @@ html.js-reveal .reveal.is-in {
   }
 }
 
+/* Browsers without <dialog> support render it as a visible block, dumping
+   the qualifier panel into the page. The UA stylesheet handles this on modern
+   browsers; this covers iOS Safari before 15.4. */
+dialog:not([open]) {
+  display: none;
+}
+
 /* ---------- utility ---------- */
 
 .visually-hidden {
