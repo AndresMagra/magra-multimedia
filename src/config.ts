@@ -13,9 +13,9 @@ export const SITE = {
 /**
  * PLACEHOLDER — replace with the dedicated business line when it exists.
  * International format, digits only, no + and no spaces (wa.me requirement).
- * +1 809 891 8185  ->  18098918185
+ * +1 829 659 1315  ->  18296591315
  */
-export const WHATSAPP_NUMBER = '18098918185';
+export const WHATSAPP_NUMBER = '18296591315';
 
 /**
  * Analytics. Left empty on purpose — the tracking module is a no-op until

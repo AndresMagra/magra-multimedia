@@ -203,8 +203,8 @@ const steps = [
 
 <script>
   import { buildWaLink, trackWhatsappClick, track } from '../scripts/tracking';
-
-  const WA_NUMBER = '18098918185';
+  // Imported, never hardcoded — config.ts is the only place the number lives.
+  import { WHATSAPP_NUMBER as WA_NUMBER } from '../config';
 
   const dialog = document.getElementById('diagnostico') as HTMLDialogElement | null;
   if (dialog) {
