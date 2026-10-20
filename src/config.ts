@@ -22,8 +22,8 @@ export const WHATSAPP_NUMBER = '18296591315';
  * these are filled, so nothing breaks before the accounts exist.
  */
 export const ANALYTICS = {
-  ga4: '', // e.g. 'G-XXXXXXXXXX'
-  metaPixel: '', // e.g. '123456789012345'
+  ga4: 'G-ZHBBYKHFW7', // e.g. 'G-XXXXXXXXXX'
+  metaPixel: '4903303973328629', // e.g. '123456789012345'
 } as const;
 
 /** Diagnostic widget — options double as the qualification data sent to WhatsApp. */
