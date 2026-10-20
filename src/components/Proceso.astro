@@ -2,13 +2,13 @@
 const pasos = [
   {
     n: '01',
-    titulo: 'Diagnóstico',
+    titulo: 'Diagnóstico gratis por WhatsApp',
     texto: 'Conversamos por WhatsApp. Reviso tu presencia digital y te digo qué está fallando.',
   },
   {
     n: '02',
-    titulo: 'Propuesta',
-    texto: 'Te envío un plan con alcance, tiempos y precio. En 48 horas.',
+    titulo: 'Propuesta con precio fijo en 48 h',
+    texto: 'Te envío un plan con alcance, tiempos y un precio fijo que no cambia.',
   },
   {
     n: '03',
@@ -17,9 +17,15 @@ const pasos = [
   },
   {
     n: '04',
-    titulo: 'Optimización',
-    texto: 'Medimos qué funciona y ajustamos. El trabajo no termina al entregar.',
+    titulo: 'Lanzamiento y reporte mensual',
+    texto: 'Publicamos, medimos qué funciona y ajustamos. Recibes un reporte cada mes.',
   },
+];
+
+const garantias = [
+  'Precio fijo antes de empezar',
+  'Hablas directo conmigo',
+  'Tú eres dueño de tu dominio, cuentas y archivos',
 ];
 ---
 
@@ -39,6 +45,16 @@ const pasos = [
         ))
       }
     </ol>
+
+    <ul class="garantias">
+      {
+        garantias.map((g, i) => (
+          <li class="garantia reveal" style={`--i:${i + 6}`}>
+            {g}
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
@@ -92,6 +108,29 @@ const pasos = [
     color: var(--text-dim);
     font-size: var(--fs-small);
     max-width: 34ch;
+  }
+
+  .garantias {
+    list-style: none;
+    padding: 0;
+    margin: clamp(2.5rem, 6vw, 4rem) 0 0;
+    display: grid;
+    gap: 1px;
+    background: var(--line-soft);
+    border: 1px solid var(--line-soft);
+  }
+
+  .garantia {
+    background: var(--bg);
+    padding: 1.4rem clamp(1.25rem, 3vw, 2rem);
+    font-size: var(--fs-body);
+    border-inline-start: 1px solid var(--gold);
+  }
+
+  @media (min-width: 900px) {
+    .garantias {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   @media (min-width: 760px) {
