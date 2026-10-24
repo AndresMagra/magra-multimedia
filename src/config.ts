@@ -11,11 +11,11 @@ export const SITE = {
 } as const;
 
 /**
- * PLACEHOLDER — replace with the dedicated business line when it exists.
+ * Magra MultiMedia WhatsApp Business line (live since Oct 24, 2026).
  * International format, digits only, no + and no spaces (wa.me requirement).
- * +1 829 659 1315  ->  18296591315
+ * +1 849 886 6203  ->  18498866203
  */
-export const WHATSAPP_NUMBER = '18296591315';
+export const WHATSAPP_NUMBER = '18498866203';
 
 /**
  * Analytics. Left empty on purpose — the tracking module is a no-op until
