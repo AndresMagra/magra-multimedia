@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import DiagnosticoDialog from '../components/DiagnosticoDialog.astro';
+import { SITE } from '../config';
+import { getLang } from '../i18n';
+
+// Meta requires a reachable privacy policy and can reject ads without one,
+// so this page is a launch requirement, not paperwork for later.
+const lang = getLang(Astro.url);
+const en = lang === 'en';
+
+const t = en
+  ? {
+      title: `Privacy policy — ${SITE.name}`,
+      description: 'How Magra MultiMedia collects, uses and protects your information.',
+      h1: 'Privacy policy',
+      updated: 'Last updated: August 2026',
+      sections: [
+        {
+          h: 'What information we collect',
+          p: [
+            'When you use the diagnostic form, we only collect the answers you choose (type of business, main challenge and whether you run ads) and an internal reference code. That information is sent to WhatsApp with you as the sender.',
+            'We also use analytics tools (Google Analytics and the Meta pixel) that record browsing data in aggregate: pages viewed, where the visit came from and actions on the site.',
+          ],
+        },
+        {
+          h: 'What we use it for',
+          p: ['To answer your inquiry, understand which ads and content work, and improve the site. We do not sell or hand over your information to third parties.'],
+        },
+        {
+          h: 'Cookies',
+          p: ["This site uses cookies and your browser's local storage to measure ad campaign performance. You can block them in your browser settings and the site will keep working."],
+        },
+        {
+          h: 'Your rights',
+          p: ['You can request access to, correction of or deletion of your information by messaging us on WhatsApp. We handle every request directly.'],
+        },
+        {
+          h: 'Contact',
+          p: ['For any question about this policy, message us on WhatsApp from any button on the site.'],
+        },
+      ],
+    }
+  : {
+      title: `Política de privacidad — ${SITE.name}`,
+      description: 'Cómo Magra MultiMedia recopila, usa y protege tu información.',
+      h1: 'Política de privacidad',
+      updated: 'Última actualización: agosto de 2026',
+      sections: [
+        {
+          h: 'Qué información recopilamos',
+          p: [
+            'Cuando usas el formulario de diagnóstico, recopilamos únicamente las respuestas que eliges (tipo de negocio, principal dificultad y si inviertes en publicidad) y un código de referencia interno. Esa información se envía a WhatsApp contigo como remitente.',
+            'También usamos herramientas de analítica (Google Analytics y el píxel de Meta) que registran datos de navegación de forma agregada: páginas vistas, origen de la visita y acciones dentro del sitio.',
+          ],
+        },
+        {
+          h: 'Para qué la usamos',
+          p: ['Para responder tu consulta, entender qué anuncios y contenidos funcionan, y mejorar el sitio. No vendemos ni cedemos tu información a terceros.'],
+        },
+        {
+          h: 'Cookies',
+          p: ['Este sitio usa cookies y almacenamiento local del navegador para medir el rendimiento de las campañas publicitarias. Puedes bloquearlas desde la configuración de tu navegador sin que el sitio deje de funcionar.'],
+        },
+        {
+          h: 'Tus derechos',
+          p: ['Puedes solicitar el acceso, la corrección o la eliminación de tu información escribiéndonos por WhatsApp. Atendemos cada solicitud de forma directa.'],
+        },
+        {
+          h: 'Contacto',
+          p: ['Para cualquier duda sobre esta política, escríbenos por WhatsApp desde cualquier botón del sitio.'],
+        },
+      ],
+    };
+---
+
+<Base title={t.title} description={t.description}>
+  <Nav />
+
+  <main class="section legal">
+    <div class="wrap prose">
+      <h1>{t.h1}</h1>
+      <p class="dim">{t.updated}</p>
+
+      {
+        t.sections.map((sec) => (
+          <>
+            <h2>{sec.h}</h2>
+            {sec.p.map((para) => <p>{para}</p>)}
+          </>
+        ))
+      }
+    </div>
+  </main>
+
+  <Footer />
+  <DiagnosticoDialog />
+</Base>
+
+<style>
+  .legal {
+    padding-block-start: calc(72px + var(--section-y));
+  }
+
+  .legal h1 {
+    font-size: var(--fs-h2);
+    margin-block-end: 0.6rem;
+  }
+
+  .legal h2 {
+    font-size: var(--fs-h3);
+    margin-block: 2.5rem 0.8rem;
+  }
+
+  .legal p {
+    color: var(--text-dim);
+    margin-block-end: 1rem;
+  }
+</style>

@@ -1,25 +1,44 @@
 ---
-const dolores = [
-  'Publicas seguido, pero las ventas no se mueven.',
-  'Pagas anuncios y no sabes con certeza qué está funcionando.',
-  'Tu competencia se ve mejor que tú, aunque tu producto sea superior.',
-];
+import { getLang } from '../i18n';
+
+const lang = getLang(Astro.url);
+const t =
+  lang === 'en'
+    ? {
+        eyebrow: 'The problem',
+        h2a: "Your business doesn't have",
+        h2b: 'a product problem.',
+        lead: 'It has a problem with how it looks, where it shows up and what it says when someone finally finds it.',
+        dolores: [
+          "You post often, but sales don't move.",
+          "You pay for ads and don't know for sure what's working.",
+          'Your competition looks better than you, even if your product is better.',
+        ],
+      }
+    : {
+        eyebrow: 'El problema',
+        h2a: 'Tu negocio no tiene',
+        h2b: 'un problema de producto.',
+        lead: 'Tiene un problema de cómo se ve, dónde aparece y qué dice cuando alguien finalmente lo encuentra.',
+        dolores: [
+          'Publicas seguido, pero las ventas no se mueven.',
+          'Pagas anuncios y no sabes con certeza qué está funcionando.',
+          'Tu competencia se ve mejor que tú, aunque tu producto sea superior.',
+        ],
+      };
 ---
 
 <section class="section problema" id="problema">
   <div class="wrap">
-    <p class="eyebrow reveal">El problema</p>
+    <p class="eyebrow reveal">{t.eyebrow}</p>
     <h2 class="problema__title reveal" style="--i:1">
-      Tu negocio no tiene<br />un problema de producto.
+      {t.h2a}<br />{t.h2b}
     </h2>
-    <p class="lead prose reveal" style="--i:2">
-      Tiene un problema de cómo se ve, dónde aparece y qué dice cuando alguien finalmente lo
-      encuentra.
-    </p>
+    <p class="lead prose reveal" style="--i:2">{t.lead}</p>
 
     <ul class="problema__list">
       {
-        dolores.map((d, i) => (
+        t.dolores.map((d, i) => (
           <li class="problema__item reveal" style={`--i:${i + 3}`}>
             <span class="problema__num">{String(i + 1).padStart(2, '0')}</span>
             <span>{d}</span>

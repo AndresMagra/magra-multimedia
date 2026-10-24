@@ -1,27 +1,44 @@
 ---
+import { getLang } from '../i18n';
+
 // Says exactly what happens when they message. "Free diagnosis" is vague and
 // cold traffic assumes it's a sales trap — removing that fear lifts click-through
 // more than any button treatment will.
+const lang = getLang(Astro.url);
+const t =
+  lang === 'en'
+    ? {
+        eyebrow: 'The diagnostic',
+        h2: "Let's talk?",
+        text: "You message me on WhatsApp. I ask you four or five questions. I review your website, your social media and your ads. I tell you what's not working and what I would do,",
+        em: 'with no sales pitch',
+        cta: 'Get my diagnostic',
+        micro: ['Free, no commitment', 'I reply personally'],
+      }
+    : {
+        eyebrow: 'El diagnóstico',
+        h2: '¿Hablamos?',
+        text: 'Me escribes por WhatsApp. Te hago cuatro o cinco preguntas. Reviso tu sitio, tus redes y tus anuncios. Te digo qué está fallando y qué haría yo,',
+        em: 'sin presentación de ventas',
+        cta: 'Pedir mi diagnóstico',
+        micro: ['Sin costo ni compromiso', 'Respondo personalmente'],
+      };
 ---
 
 <section class="section cierre" id="diagnostico-cta">
   <div class="wrap cierre__inner">
-    <p class="eyebrow reveal">El diagnóstico</p>
-    <h2 class="cierre__title reveal" style="--i:1">¿Hablamos?</h2>
-
+    <p class="eyebrow reveal">{t.eyebrow}</p>
+    <h2 class="cierre__title reveal" style="--i:1">{t.h2}</h2>
     <p class="cierre__text lead reveal" style="--i:2">
-      Me escribes por WhatsApp. Te hago cuatro o cinco preguntas. Reviso tu sitio, tus redes y tus
-      anuncios. Te digo qué está fallando y qué haría yo — <em>sin presentación de ventas</em>.
+      {t.text} <em>{t.em}</em>.
     </p>
-
     <div class="cierre__actions reveal" style="--i:3">
       <button class="btn" type="button" data-open-diagnostico data-source="cierre">
-        Pedir mi diagnóstico
+        {t.cta}
       </button>
     </div>
-
     <p class="cierre__micro reveal" style="--i:4">
-      Sin costo ni compromiso <span class="sep">·</span> Respondo personalmente
+      {t.micro[0]} <span class="sep">·</span> {t.micro[1]}
     </p>
   </div>
 </section>

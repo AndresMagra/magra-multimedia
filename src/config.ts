@@ -46,9 +46,31 @@ export const PROBLEMAS = [
 
 export const PUBLICIDAD = ['Sí, actualmente', 'Antes sí, ahora no', 'Nunca'] as const;
 
+/** English versions of the diagnostic options, same order as the lists above. */
+export const NEGOCIOS_EN = [
+  'Restaurant',
+  'Clinic or medical office',
+  'Real estate',
+  'Hotel or tourism',
+  'Store / e-commerce',
+  'Professional services',
+  'Other',
+] as const;
+
+export const PROBLEMAS_EN = [
+  "I'm not getting enough customers",
+  'I get visits but no sales',
+  'I barely have a digital presence',
+  "My ads aren't working",
+] as const;
+
+export const PUBLICIDAD_EN = ['Yes, right now', 'I used to, not anymore', 'Never'] as const;
+
 /** Fallback link for the "prefiero escribir directo" escape hatch. */
-export function waDirectLink(): string {
-  const texto = encodeURIComponent('Hola Magra. Quiero el diagnóstico.');
+export function waDirectLink(lang: 'es' | 'en' = 'es'): string {
+  const texto = encodeURIComponent(
+    lang === 'en' ? "Hi Magra. I'd like the free diagnostic." : 'Hola Magra. Quiero el diagnóstico.',
+  );
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${texto}`;
 }
 

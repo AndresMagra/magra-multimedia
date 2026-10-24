@@ -2,11 +2,13 @@
 // Mobile only. Most traffic arrives in the Instagram/Facebook in-app browser,
 // where the nav CTA is hidden — this keeps the conversion path one thumb away
 // at every scroll position.
+import { getLang } from '../i18n';
+const label = getLang(Astro.url) === 'en' ? 'Get my diagnostic' : 'Pedir mi diagnóstico';
 ---
 
 <div class="sticky" id="sticky-bar" hidden>
   <button class="btn sticky__btn" type="button" data-open-diagnostico data-source="sticky">
-    Pedir mi diagnóstico
+    {label}
   </button>
 </div>
 
@@ -47,7 +49,9 @@
 
 <script>
   const bar = document.getElementById('sticky-bar');
-  const hero = document.querySelector('.hero');
+  // Home has .hero; inner pages use their first section as the trigger, so the
+  // mobile CTA is reachable on every page (the nav CTA is hidden on phones).
+  const hero = document.querySelector('.hero') ?? document.querySelector('main .section');
 
   if (bar && hero) {
     bar.hidden = false;

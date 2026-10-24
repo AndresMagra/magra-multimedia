@@ -1,38 +1,36 @@
 ---
-const pasos = [
-  {
-    n: '01',
-    titulo: 'Diagnóstico gratis por WhatsApp',
-    texto: 'Conversamos por WhatsApp. Reviso tu presencia digital y te digo qué está fallando.',
-  },
-  {
-    n: '02',
-    titulo: 'Propuesta con precio fijo en 48 h',
-    texto: 'Te envío un plan con alcance, tiempos y un precio fijo que no cambia.',
-  },
-  {
-    n: '03',
-    titulo: 'Producción',
-    texto: 'Trabajo por etapas con aprobación en cada una. Ves avances, no promesas.',
-  },
-  {
-    n: '04',
-    titulo: 'Lanzamiento y reporte mensual',
-    texto: 'Publicamos, medimos qué funciona y ajustamos. Recibes un reporte cada mes.',
-  },
-];
+import { getLang } from '../i18n';
 
-const garantias = [
-  'Precio fijo antes de empezar',
-  'Hablas directo conmigo',
-  'Tú eres dueño de tu dominio, cuentas y archivos',
-];
+const lang = getLang(Astro.url);
+const en = lang === 'en';
+
+const pasos = en
+  ? [
+      { n: '01', titulo: 'Free diagnostic on WhatsApp', texto: "We chat on WhatsApp. I review your online presence and tell you what's not working." },
+      { n: '02', titulo: 'Fixed-price proposal in 48 h', texto: "I send you a plan with scope, timeline and a fixed price that won't change." },
+      { n: '03', titulo: 'Production', texto: 'I work in stages, with your approval at each one. You see progress, not promises.' },
+      { n: '04', titulo: 'Launch and monthly report', texto: "We publish, measure what works and adjust. You get a report every month." },
+    ]
+  : [
+      { n: '01', titulo: 'Diagnóstico gratis por WhatsApp', texto: 'Conversamos por WhatsApp. Reviso tu presencia digital y te digo qué está fallando.' },
+      { n: '02', titulo: 'Propuesta con precio fijo en 48 h', texto: 'Te envío un plan con alcance, tiempos y un precio fijo que no cambia.' },
+      { n: '03', titulo: 'Producción', texto: 'Trabajo por etapas con aprobación en cada una. Ves avances, no promesas.' },
+      { n: '04', titulo: 'Lanzamiento y reporte mensual', texto: 'Publicamos, medimos qué funciona y ajustamos. Recibes un reporte cada mes.' },
+    ];
+
+const garantias = en
+  ? ['Fixed price before we start', 'You talk directly to me', 'You own your domain, accounts and files']
+  : ['Precio fijo antes de empezar', 'Hablas directo conmigo', 'Tú eres dueño de tu dominio, cuentas y archivos'];
+
+const t = en
+  ? { eyebrow: 'How I work', h2: 'No surprises and no endless quotes.' }
+  : { eyebrow: 'Cómo trabajo', h2: 'Sin sorpresas y sin cotizaciones eternas.' };
 ---
 
 <section class="section proceso" id="proceso">
   <div class="wrap">
-    <p class="eyebrow reveal">Cómo trabajo</p>
-    <h2 class="proceso__title reveal" style="--i:1">Sin sorpresas y sin cotizaciones eternas.</h2>
+    <p class="eyebrow reveal">{t.eyebrow}</p>
+    <h2 class="proceso__title reveal" style="--i:1">{t.h2}</h2>
 
     <ol class="proceso__list">
       {

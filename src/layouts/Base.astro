@@ -1,31 +1,45 @@
 ---
 import '../styles/global.css';
 import { SITE, ANALYTICS, url } from '../config';
+import { getLang, alternates } from '../i18n';
 
 interface Props {
   title: string;
   description: string;
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+const { title, description, noindex = false } = Astro.props;
+const siteUrl = Astro.site ?? SITE.url;
+const lang = getLang(Astro.url);
+const alt = alternates(Astro.url);
+// Canonical always points at the trailing-slash URL GitHub Pages actually serves.
+const canonical = new URL(lang === 'en' ? alt.en : alt.es, siteUrl).href;
+const altEs = new URL(alt.es, siteUrl).href;
+const altEn = new URL(alt.en, siteUrl).href;
 ---
 
 <!doctype html>
-<html lang="es" class="no-js">
+<html lang={lang} class="no-js">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={altEs} />
+    <link rel="alternate" hreflang="en" href={altEn} />
+    <link rel="alternate" hreflang="x-default" href={altEs} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="es_419" />
-    <meta property="og:image" content={new URL(url("/img/hero-poster.jpg"), Astro.site ?? SITE.url).href} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_419'} />
+    <meta property="og:locale:alternate" content={lang === 'en' ? 'es_419' : 'en_US'} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:image" content={new URL(url("/img/hero-poster.jpg"), siteUrl).href} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />

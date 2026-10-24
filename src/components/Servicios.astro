@@ -1,44 +1,82 @@
 ---
-const servicios = [
-  {
-    n: '01',
-    titulo: 'Video y anuncios',
-    texto:
-      'Piezas listas para publicar que detienen el scroll y venden. Producción en días, no en meses.',
-    precios: ['Video de anuncio desde RD$15,000'],
-    cta: 'Hablar de video',
-    source: 'servicio_video',
-  },
-  {
-    n: '02',
-    titulo: 'Sitios web',
-    texto:
-      'Sitios rápidos, elegantes y construidos para convertir visitas en conversaciones. Nada de plantillas.',
-    precios: [
-      'Página de aterrizaje desde RD$30,000',
-      'Sitio de negocio (5-8 páginas) desde RD$60,000',
-      'Plan de mantenimiento desde RD$3,000/mes',
-    ],
-    cta: 'Hablar de mi sitio',
-    source: 'servicio_web',
-  },
-  {
-    n: '03',
-    titulo: 'Campañas publicitarias',
-    texto:
-      'Google, Meta e Instagram. Gestión, medición y optimización con números claros cada mes.',
-    precios: ['Manejo de anuncios en Meta desde RD$15,000/mes'],
-    nota: 'La inversión publicitaria la pagas tú directamente a Meta.',
-    cta: 'Hablar de campañas',
-    source: 'servicio_campanas',
-  },
-];
+import { getLang } from '../i18n';
+
+const lang = getLang(Astro.url);
+const en = lang === 'en';
+
+const servicios = en
+  ? [
+      {
+        n: '01',
+        titulo: 'Video and ads',
+        texto: 'Ready-to-publish pieces that stop the scroll and sell. Produced in days, not months.',
+        precios: ['Ad video from RD$15,000'],
+        cta: 'Talk about video',
+        source: 'servicio_video',
+      },
+      {
+        n: '02',
+        titulo: 'Websites',
+        texto: 'Fast, elegant sites built to turn visits into conversations. No templates.',
+        precios: [
+          'Landing page from RD$30,000',
+          'Business site (5-8 pages) from RD$60,000',
+          'Maintenance plan from RD$3,000/month',
+        ],
+        cta: 'Talk about my site',
+        source: 'servicio_web',
+      },
+      {
+        n: '03',
+        titulo: 'Ad campaigns',
+        texto: 'Google, Meta and Instagram. Management, tracking and optimization with clear numbers every month.',
+        precios: ['Meta ads management from RD$15,000/month'],
+        nota: 'You pay the ad spend directly to Meta.',
+        cta: 'Talk about campaigns',
+        source: 'servicio_campanas',
+      },
+    ]
+  : [
+      {
+        n: '01',
+        titulo: 'Video y anuncios',
+        texto: 'Piezas listas para publicar que detienen el scroll y venden. Producción en días, no en meses.',
+        precios: ['Video de anuncio desde RD$15,000'],
+        cta: 'Hablar de video',
+        source: 'servicio_video',
+      },
+      {
+        n: '02',
+        titulo: 'Sitios web',
+        texto: 'Sitios rápidos, elegantes y construidos para convertir visitas en conversaciones. Nada de plantillas.',
+        precios: [
+          'Página de aterrizaje desde RD$30,000',
+          'Sitio de negocio (5-8 páginas) desde RD$60,000',
+          'Plan de mantenimiento desde RD$3,000/mes',
+        ],
+        cta: 'Hablar de mi sitio',
+        source: 'servicio_web',
+      },
+      {
+        n: '03',
+        titulo: 'Campañas publicitarias',
+        texto: 'Google, Meta e Instagram. Gestión, medición y optimización con números claros cada mes.',
+        precios: ['Manejo de anuncios en Meta desde RD$15,000/mes'],
+        nota: 'La inversión publicitaria la pagas tú directamente a Meta.',
+        cta: 'Hablar de campañas',
+        source: 'servicio_campanas',
+      },
+    ];
+
+const t = en
+  ? { eyebrow: 'What I do', h2: 'Three pieces. One strategy.' }
+  : { eyebrow: 'Qué hago', h2: 'Tres piezas. Una sola estrategia.' };
 ---
 
 <section class="section servicios" id="servicios">
   <div class="wrap">
-    <p class="eyebrow reveal">Qué hago</p>
-    <h2 class="servicios__title reveal" style="--i:1">Tres piezas. Una sola estrategia.</h2>
+    <p class="eyebrow reveal">{t.eyebrow}</p>
+    <h2 class="servicios__title reveal" style="--i:1">{t.h2}</h2>
 
     <div class="servicios__grid">
       {

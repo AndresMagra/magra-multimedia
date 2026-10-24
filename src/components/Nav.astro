@@ -1,29 +1,62 @@
 ---
-import { SITE, url } from '../config';
+import { SITE } from '../config';
+import { getLang, href, alternates } from '../i18n';
+
+const lang = getLang(Astro.url);
+const alt = alternates(Astro.url);
+const en = lang === 'en';
+const t = en
+  ? {
+      home: 'home',
+      nav: 'Main',
+      links: [
+        ['Services', href(lang, '/', '#servicios')],
+        ['Process', href(lang, '/', '#proceso')],
+        ['Why me', href(lang, '/', '#por-que')],
+        ['Diagnostic', href(lang, '/diagnostico')],
+        ['FAQ', href(lang, '/', '#faq')],
+      ],
+      cta: 'Get my diagnostic',
+    }
+  : {
+      home: 'inicio',
+      nav: 'Principal',
+      links: [
+        ['Servicios', href(lang, '/', '#servicios')],
+        ['Proceso', href(lang, '/', '#proceso')],
+        ['Por qué', href(lang, '/', '#por-que')],
+        ['Diagnóstico', href(lang, '/diagnostico')],
+        ['Preguntas', href(lang, '/', '#faq')],
+      ],
+      cta: 'Pedir diagnóstico',
+    };
 ---
 
 <header class="nav" id="nav">
   <div class="wrap nav__inner">
-    <a href={url()} class="nav__brand" aria-label={`${SITE.name} — inicio`}>
+    <a href={href(lang, '/')} class="nav__brand" aria-label={`${SITE.name} — ${t.home}`}>
       <span class="nav__mark" aria-hidden="true">MM</span>
       <span class="nav__name">Magra <em>MultiMedia</em></span>
     </a>
 
-    <nav class="nav__links" aria-label="Principal">
-      <a href={url('/#servicios')}>Servicios</a>
-      <a href={url('/#proceso')}>Proceso</a>
-      <a href={url('/#por-que')}>Por qué</a>
-      <a href={url('/diagnostico')}>Diagnóstico</a>
-      <a href={url('/#faq')}>Preguntas</a>
+    <nav class="nav__links" aria-label={t.nav}>
+      {t.links.map(([label, link]) => <a href={link}>{label}</a>)}
     </nav>
 
     <div class="nav__right">
-      <!-- English lands in v1.1; the route exists so the toggle is not a lie later. -->
-      <button class="nav__lang" type="button" data-lang-toggle aria-label="Switch to English" disabled>
-        EN
-      </button>
+      {
+        en ? (
+          <a class="nav__lang" href={alt.es} hreflang="es" lang="es" aria-label="Ver en español" data-lang-toggle>
+            ES
+          </a>
+        ) : (
+          <a class="nav__lang" href={alt.en} hreflang="en" lang="en" aria-label="View in English" data-lang-toggle>
+            EN
+          </a>
+        )
+      }
       <button class="btn nav__cta" type="button" data-open-diagnostico data-source="nav">
-        Pedir diagnóstico
+        {t.cta}
       </button>
     </div>
   </div>
@@ -125,13 +158,21 @@ import { SITE, url } from '../config';
   .nav__lang {
     background: none;
     border: 1px solid var(--line-soft);
-    color: var(--text-faint);
+    color: var(--text-dim);
     font-size: var(--fs-micro);
     letter-spacing: 0.12em;
-    padding: 0.45rem 0.7rem;
+    line-height: 1;
+    padding: 0.55rem 0.75rem;
     border-radius: var(--radius);
-    cursor: not-allowed;
+    cursor: pointer;
     font-family: var(--font-body);
+    transition: color 0.4s var(--ease), border-color 0.4s var(--ease);
+  }
+
+  .nav__lang:hover,
+  .nav__lang:focus-visible {
+    color: var(--gold-light);
+    border-color: var(--gold);
   }
 
   .nav__cta {
@@ -154,4 +195,11 @@ import { SITE, url } from '../config';
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   }
+
+  // Both languages share section ids, so keep the reader's place on switch.
+  document.querySelectorAll<HTMLAnchorElement>('[data-lang-toggle]').forEach((a) =>
+    a.addEventListener('click', () => {
+      if (window.location.hash) a.href = a.href.split('#')[0] + window.location.hash;
+    }),
+  );
 </script>

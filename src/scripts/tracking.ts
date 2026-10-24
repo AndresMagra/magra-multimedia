@@ -91,17 +91,16 @@ export function track(event: string, params: Record<string, unknown> = {}): void
 export function buildWaLink(
   number: string,
   answers: { negocio?: string; problema?: string; publicidad?: string },
+  lang: 'es' | 'en' = 'es',
 ): { url: string; code: string } {
   const code = getLeadCode();
-  const lines = ['Hola Magra.'];
-
-  if (answers.negocio) lines.push(`Tengo: ${answers.negocio}.`);
-  if (answers.problema) lines.push(`Mi problema: ${answers.problema}.`);
-  if (answers.publicidad) lines.push(`Publicidad: ${answers.publicidad}.`);
-
-  lines.push('Quiero el diagnóstico.');
+  const en = lang === 'en';
+  const lines = [en ? 'Hi Magra.' : 'Hola Magra.'];
+  if (answers.negocio) lines.push(`${en ? 'Business' : 'Tengo'}: ${answers.negocio}.`);
+  if (answers.problema) lines.push(`${en ? 'My problem' : 'Mi problema'}: ${answers.problema}.`);
+  if (answers.publicidad) lines.push(`${en ? 'Ads' : 'Publicidad'}: ${answers.publicidad}.`);
+  lines.push(en ? "I'd like the free diagnostic." : 'Quiero el diagnóstico.');
   lines.push(`Ref: ${code}`);
-
   const url = `https://wa.me/${number}?text=${encodeURIComponent(lines.join('\n'))}`;
   return { url, code };
 }
@@ -119,6 +118,7 @@ export function trackWhatsappClick(
     ad_status: answers.publicidad ?? 'no_especificado',
     cta_source: source,
     page: window.location.pathname,
+    lang: document.documentElement.lang,
   });
   // Meta's standard Lead event, so campaigns can optimise against it directly.
   window.fbq?.('track', 'Lead', { content_name: source, lead_code: code });

@@ -1,6 +1,41 @@
 ---
-import { SITE, url } from '../config';
+import { SITE } from '../config';
+import { getLang, href } from '../i18n';
+
 const year = new Date().getFullYear();
+const lang = getLang(Astro.url);
+const en = lang === 'en';
+const t = en
+  ? {
+      tag: 'Video · Websites · Ad campaigns',
+      geo: 'Latin America & US · Remote work',
+      nav: 'Footer',
+      links: [
+        ['Services', href(lang, '/', '#servicios')],
+        ['Process', href(lang, '/', '#proceso')],
+        ['Why me', href(lang, '/', '#por-que')],
+        ['FAQ', href(lang, '/', '#faq')],
+        ['Video and ads', href(lang, '/servicios/video-y-anuncios')],
+        ['Diagnostic', href(lang, '/diagnostico')],
+        ['Privacy', href(lang, '/privacidad')],
+      ],
+      cta: 'Get my diagnostic',
+    }
+  : {
+      tag: SITE.tagline,
+      geo: 'Latinoamérica · Trabajo remoto',
+      nav: 'Pie de página',
+      links: [
+        ['Servicios', href(lang, '/', '#servicios')],
+        ['Proceso', href(lang, '/', '#proceso')],
+        ['Por qué', href(lang, '/', '#por-que')],
+        ['Preguntas', href(lang, '/', '#faq')],
+        ['Video y anuncios', href(lang, '/servicios/video-y-anuncios')],
+        ['Diagnóstico', href(lang, '/diagnostico')],
+        ['Privacidad', href(lang, '/privacidad')],
+      ],
+      cta: 'Pedir diagnóstico',
+    };
 ---
 
 <footer class="footer">
@@ -8,25 +43,19 @@ const year = new Date().getFullYear();
     <div class="footer__brand">
       <span class="footer__mark" aria-hidden="true">MM</span>
       <p class="footer__name">Magra <em>MultiMedia</em></p>
-      <p class="footer__tag">{SITE.tagline}</p>
-      <p class="footer__geo">Latinoamérica · Trabajo remoto</p>
+      <p class="footer__tag">{t.tag}</p>
+      <p class="footer__geo">{t.geo}</p>
     </div>
 
-    <nav class="footer__nav" aria-label="Pie de página">
-      <a href={url('/#servicios')}>Servicios</a>
-      <a href={url('/#proceso')}>Proceso</a>
-      <a href={url('/#por-que')}>Por qué</a>
-      <a href={url('/#faq')}>Preguntas</a>
-      <a href={url('/servicios/video-y-anuncios')}>Video y anuncios</a>
-      <a href={url('/diagnostico')}>Diagnóstico</a>
-      <a href={url('/privacidad')}>Privacidad</a>
+    <nav class="footer__nav" aria-label={t.nav}>
+      {t.links.map(([label, link]) => <a href={link}>{label}</a>)}
     </nav>
   </div>
 
   <div class="wrap footer__base">
     <p>&copy; {year} {SITE.name}</p>
     <button class="footer__cta" type="button" data-open-diagnostico data-source="footer">
-      Pedir diagnóstico &rarr;
+      {t.cta} &rarr;
     </button>
   </div>
 </footer>

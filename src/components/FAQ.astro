@@ -1,46 +1,88 @@
 ---
+import { getLang } from '../i18n';
+
 // Cold traffic doesn't ask objections — it just leaves. Answer them here.
 // The last one turns people away on purpose: a solo operator can't afford
 // an afternoon on a lead that was never going to buy.
-const faqs = [
-  {
-    id: 'precio',
-    q: '¿Cuánto cuesta?',
-    a: 'Cada proyecto se cotiza a la medida y te doy un precio fijo en 48 horas. Para que tengas una idea: página de aterrizaje desde RD$30,000, sitio de negocio desde RD$60,000, y video de anuncio desde RD$15,000 con manejo de anuncios desde RD$15,000 al mes. La inversión en publicidad la pagas tú directamente a Meta o Google.',
-  },
-  {
-    id: 'ubicacion',
-    q: '¿Dónde estás ubicado? ¿Trabajas con negocios de otros países?',
-    a: 'Opero desde República Dominicana y trabajo con negocios en toda Latinoamérica. Todo el proceso es remoto: WhatsApp, videollamada y entregas digitales.',
-  },
-  {
-    id: 'ia',
-    q: '¿Usas inteligencia artificial?',
-    a: 'Sí, donde mejora el resultado o la velocidad. También hay criterio humano en cada decisión: qué se dice, a quién y por qué. La IA es una herramienta, no la estrategia.',
-  },
-  {
-    id: 'tiempos',
-    q: '¿Cuánto tarda un proyecto?',
-    a: 'Un video publicitario, alrededor de una semana. Un sitio web, de dos a tres semanas. Campañas, activas en pocos días. Los tiempos exactos van en la propuesta.',
-  },
-  {
-    id: 'garantia',
-    q: '¿Qué pasa si no me gusta el resultado?',
-    a: 'Trabajamos por etapas con aprobación en cada una, así que no llegas al final con una sorpresa. Las revisiones están incluidas hasta que apruebes.',
-  },
-  {
-    id: 'clientes',
-    q: '¿Con qué tipo de negocios trabajas?',
-    a: 'Negocios que ya venden y quieren vender más: restaurantes, clínicas, inmobiliarias, hoteles, tiendas y servicios profesionales. Si apenas estás empezando, probablemente todavía no soy tu mejor opción.',
-  },
-];
+const lang = getLang(Astro.url);
+const en = lang === 'en';
+
+const faqs = en
+  ? [
+      {
+        id: 'precio',
+        q: 'How much does it cost?',
+        a: 'Every project is quoted to fit, and I give you a fixed price within 48 hours. To give you an idea: landing page from RD$30,000, business site from RD$60,000, and ad video from RD$15,000, with ads management from RD$15,000 a month. You pay the ad spend directly to Meta or Google.',
+      },
+      {
+        id: 'ubicacion',
+        q: 'Where are you based? Do you work with businesses in other countries?',
+        a: "I'm based in the Dominican Republic and work with businesses across Latin America and with Latino-owned businesses in the US. The whole process is remote: WhatsApp, video calls and digital delivery.",
+      },
+      {
+        id: 'ia',
+        q: 'Do you use artificial intelligence?',
+        a: 'Yes, wherever it improves the result or the speed. There is also human judgment behind every decision: what gets said, to whom and why. AI is a tool, not the strategy.',
+      },
+      {
+        id: 'tiempos',
+        q: 'How long does a project take?',
+        a: 'An ad video, about a week. A website, two to three weeks. Campaigns, live within a few days. Exact timelines go in the proposal.',
+      },
+      {
+        id: 'garantia',
+        q: "What if I don't like the result?",
+        a: "We work in stages with your approval at each one, so there's no surprise at the end. Revisions are included until you approve.",
+      },
+      {
+        id: 'clientes',
+        q: 'What kind of businesses do you work with?',
+        a: "Businesses that already sell and want to sell more: restaurants, clinics, real estate, hotels, stores and professional services. If you're just getting started, I'm probably not your best option yet.",
+      },
+    ]
+  : [
+      {
+        id: 'precio',
+        q: '¿Cuánto cuesta?',
+        a: 'Cada proyecto se cotiza a la medida y te doy un precio fijo en 48 horas. Para que tengas una idea: página de aterrizaje desde RD$30,000, sitio de negocio desde RD$60,000, y video de anuncio desde RD$15,000 con manejo de anuncios desde RD$15,000 al mes. La inversión en publicidad la pagas tú directamente a Meta o Google.',
+      },
+      {
+        id: 'ubicacion',
+        q: '¿Dónde estás ubicado? ¿Trabajas con negocios de otros países?',
+        a: 'Opero desde República Dominicana y trabajo con negocios en toda Latinoamérica. Todo el proceso es remoto: WhatsApp, videollamada y entregas digitales.',
+      },
+      {
+        id: 'ia',
+        q: '¿Usas inteligencia artificial?',
+        a: 'Sí, donde mejora el resultado o la velocidad. También hay criterio humano en cada decisión: qué se dice, a quién y por qué. La IA es una herramienta, no la estrategia.',
+      },
+      {
+        id: 'tiempos',
+        q: '¿Cuánto tarda un proyecto?',
+        a: 'Un video publicitario, alrededor de una semana. Un sitio web, de dos a tres semanas. Campañas, activas en pocos días. Los tiempos exactos van en la propuesta.',
+      },
+      {
+        id: 'garantia',
+        q: '¿Qué pasa si no me gusta el resultado?',
+        a: 'Trabajamos por etapas con aprobación en cada una, así que no llegas al final con una sorpresa. Las revisiones están incluidas hasta que apruebes.',
+      },
+      {
+        id: 'clientes',
+        q: '¿Con qué tipo de negocios trabajas?',
+        a: 'Negocios que ya venden y quieren vender más: restaurantes, clínicas, inmobiliarias, hoteles, tiendas y servicios profesionales. Si apenas estás empezando, probablemente todavía no soy tu mejor opción.',
+      },
+    ];
+
+const t = en
+  ? { eyebrow: 'FAQ', h2: 'What everyone asks before writing.' }
+  : { eyebrow: 'Preguntas', h2: 'Lo que todos preguntan antes de escribir.' };
 ---
 
 <section class="section faq" id="faq">
   <div class="wrap faq__grid">
     <div>
-      <p class="eyebrow reveal">Preguntas</p>
-      <h2 class="faq__title reveal" style="--i:1">Lo que todos preguntan antes de escribir.</h2>
+      <p class="eyebrow reveal">{t.eyebrow}</p>
+      <h2 class="faq__title reveal" style="--i:1">{t.h2}</h2>
     </div>
 
     <div class="faq__list">

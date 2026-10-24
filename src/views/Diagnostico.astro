@@ -1,0 +1,260 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import DiagnosticoDialog from '../components/DiagnosticoDialog.astro';
+import { getLang } from '../i18n';
+
+// Cold traffic assumes "diagnóstico gratis" is bait for a sales call. This page
+// exists to kill that assumption by saying exactly what happens — including
+// what does NOT happen. Removing the fear of being pitched lifts click-through
+// more than any button treatment.
+const lang = getLang(Astro.url);
+const en = lang === 'en';
+
+const t = en
+  ? {
+      title: 'The diagnostic — Magra MultiMedia',
+      description:
+        'Exactly what happens when you message me: four or five questions, a review of your online presence and an honest answer. No sales pitch.',
+      eyebrow: 'Free, no commitment',
+      h1: 'The diagnostic',
+      lead: "It's a WhatsApp conversation where I review your business and tell you honestly what I would do. This is exactly what happens, step by step.",
+      start: 'Start on WhatsApp',
+      noTitle: "What it isn't",
+      needTitle: 'What I need from you',
+      closeA: "If in the end I tell you that you don't need me,",
+      closeB: "that's a useful answer too.",
+      cta: 'Get my diagnostic',
+      micro: 'I reply personally',
+      pasos: [
+        { n: '01', titulo: 'You message me on WhatsApp', texto: "From any button on this page. The message fills itself in with your type of business and your main challenge, so you don't have to explain everything from scratch." },
+        { n: '02', titulo: 'I ask you four or five questions', texto: "What you sell, to whom, what you've tried before and what result you need. No long forms." },
+        { n: '03', titulo: 'I review your online presence', texto: 'Your website, your social media and your ads if you have them. Calmly and on my own time, not while we chat.' },
+        { n: '04', titulo: 'I tell you what I would do', texto: "What's not working, what I'd fix first and what impact I'd expect. If you can solve it without me, I'll tell you that too." },
+      ],
+      noEs: ["It's not a forty-five-minute sales call.", "I won't ask for card or payment details.", "You're under no obligation to hire me afterwards."],
+      necesito: ['Ten minutes of your time, split however suits you.', "Access to what you've already published: website, social media, ads.", "Honesty about your budget, so I don't waste your time."],
+    }
+  : {
+      title: 'El diagnóstico — Magra MultiMedia',
+      description:
+        'Qué pasa exactamente cuando me escribes: cuatro o cinco preguntas, una revisión de tu presencia digital y una respuesta honesta. Sin presentación de ventas.',
+      eyebrow: 'Sin costo ni compromiso',
+      h1: 'El diagnóstico',
+      lead: 'Es una conversación por WhatsApp donde reviso tu negocio y te digo con honestidad qué haría yo. Esto es exactamente lo que pasa, paso por paso.',
+      start: 'Empezar por WhatsApp',
+      noTitle: 'Qué no es',
+      needTitle: 'Qué necesito de ti',
+      closeA: 'Si al final te digo que no me necesitas,',
+      closeB: 'también es una respuesta útil.',
+      cta: 'Pedir mi diagnóstico',
+      micro: 'Respondo personalmente',
+      pasos: [
+        { n: '01', titulo: 'Me escribes por WhatsApp', texto: 'Con cualquier botón de esta página. El mensaje se arma solo con tu tipo de negocio y tu principal dificultad, así no tienes que explicar todo desde cero.' },
+        { n: '02', titulo: 'Te hago cuatro o cinco preguntas', texto: 'Qué vendes, a quién, qué has intentado antes y qué resultado necesitas. Nada de formularios largos.' },
+        { n: '03', titulo: 'Reviso tu presencia digital', texto: 'Tu sitio, tus redes y tus anuncios si los tienes. Con calma y por mi cuenta, no mientras conversamos.' },
+        { n: '04', titulo: 'Te digo qué haría yo', texto: 'Qué está fallando, qué arreglaría primero y qué impacto esperaría. Si lo puedes resolver sin mí, te lo digo también.' },
+      ],
+      noEs: ['No es una llamada de ventas de cuarenta y cinco minutos.', 'No te voy a pedir datos de tarjeta ni de pago.', 'No tienes ninguna obligación de contratarme después.'],
+      necesito: ['Diez minutos de tu tiempo, repartidos como te quede cómodo.', 'Acceso a lo que ya tienes publicado: sitio, redes, anuncios.', 'Honestidad sobre tu presupuesto, para no hacerte perder el tiempo.'],
+    };
+---
+
+<Base title={t.title} description={t.description}>
+  <Nav />
+
+  <main class="diag-page">
+    <section class="section dp-hero">
+      <div class="wrap">
+        <p class="eyebrow reveal">{t.eyebrow}</p>
+        <h1 class="dp-hero__title reveal" style="--i:1">{t.h1}</h1>
+        <p class="lead prose reveal" style="--i:2">{t.lead}</p>
+        <div class="dp-hero__cta reveal" style="--i:3">
+          <button class="btn" type="button" data-open-diagnostico data-source="diagnostico_hero">
+            {t.start}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dp-pasos">
+      <div class="wrap">
+        <ol class="dp-list">
+          {
+            t.pasos.map((p, i) => (
+              <li class="dp-paso reveal" style={`--i:${i}`}>
+                <span class="dp-paso__n">{p.n}</span>
+                <div>
+                  <h2 class="dp-paso__title">{p.titulo}</h2>
+                  <p class="dp-paso__text">{p.texto}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="section dp-split">
+      <div class="wrap dp-split__grid">
+        <div class="reveal">
+          <p class="eyebrow">{t.noTitle}</p>
+          <ul class="dp-ul dp-ul--no">
+            {t.noEs.map((x) => <li>{x}</li>)}
+          </ul>
+        </div>
+        <div class="reveal" style="--i:1">
+          <p class="eyebrow">{t.needTitle}</p>
+          <ul class="dp-ul dp-ul--si">
+            {t.necesito.map((x) => <li>{x}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dp-cierre">
+      <div class="wrap">
+        <h2 class="dp-cierre__title reveal">
+          {t.closeA}<br /><span class="gold-text">{t.closeB}</span>
+        </h2>
+        <div class="dp-cierre__cta reveal" style="--i:1">
+          <button class="btn" type="button" data-open-diagnostico data-source="diagnostico_cierre">
+            {t.cta}
+          </button>
+        </div>
+        <p class="dp-cierre__micro reveal" style="--i:2">{t.micro}</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <StickyBar />
+  <DiagnosticoDialog />
+</Base>
+
+<style>
+  .dp-hero {
+    padding-block-start: calc(72px + var(--section-y));
+    padding-block-end: 0;
+  }
+
+  .dp-hero__title {
+    font-size: clamp(2.8rem, 8vw, 5.5rem);
+    margin-block-end: 1.3rem;
+  }
+
+  .dp-hero__cta {
+    margin-block-start: 2.2rem;
+  }
+
+  .dp-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+    border-block-start: 1px solid var(--line-soft);
+  }
+
+  .dp-paso {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(1rem, 4vw, 3rem);
+    padding-block: clamp(1.6rem, 4vw, 2.4rem);
+    border-block-end: 1px solid var(--line-soft);
+  }
+
+  .dp-paso__n {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .dp-paso__title {
+    font-size: var(--fs-h3);
+    margin-block-end: 0.5rem;
+  }
+
+  .dp-paso__text {
+    color: var(--text-dim);
+    font-size: var(--fs-small);
+    max-width: 58ch;
+    margin: 0;
+  }
+
+  .dp-split {
+    background: var(--bg-elev);
+    border-block: 1px solid var(--line-soft);
+  }
+
+  .dp-split__grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .dp-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+    color: var(--text-dim);
+    font-size: var(--fs-small);
+    max-width: 46ch;
+  }
+
+  .dp-ul li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+  }
+
+  .dp-ul li::before {
+    flex-shrink: 0;
+    font-family: var(--font-display);
+  }
+
+  .dp-ul--no li::before {
+    content: '×';
+    color: var(--text-faint);
+  }
+
+  .dp-ul--si li::before {
+    content: '—';
+    color: var(--gold);
+  }
+
+  .dp-cierre {
+    text-align: center;
+  }
+
+  .dp-cierre__title {
+    font-size: var(--fs-h2);
+    margin-block-end: 2.2rem;
+  }
+
+  .dp-cierre__micro {
+    font-size: var(--fs-micro);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-block-start: 1.2rem;
+  }
+
+  @media (min-width: 860px) {
+    .dp-split__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dp-hero__cta .btn,
+    .dp-cierre__cta .btn {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,22 +1,58 @@
 ---
-import { NEGOCIOS, PROBLEMAS, PUBLICIDAD, WHATSAPP_NUMBER, waDirectLink } from '../config';
+import {
+  NEGOCIOS,
+  PROBLEMAS,
+  PUBLICIDAD,
+  NEGOCIOS_EN,
+  PROBLEMAS_EN,
+  PUBLICIDAD_EN,
+  waDirectLink,
+} from '../config';
+import { getLang } from '../i18n';
 
-const steps = [
-  { key: 'negocio', pregunta: '¿Qué tipo de negocio tienes?', opciones: NEGOCIOS },
-  { key: 'problema', pregunta: '¿Qué te está frenando?', opciones: PROBLEMAS },
-  { key: 'publicidad', pregunta: '¿Ya inviertes en publicidad?', opciones: PUBLICIDAD },
-];
+const lang = getLang(Astro.url);
+const en = lang === 'en';
+
+const steps = en
+  ? [
+      { key: 'negocio', pregunta: 'What kind of business do you have?', opciones: NEGOCIOS_EN },
+      { key: 'problema', pregunta: "What's holding you back?", opciones: PROBLEMAS_EN },
+      { key: 'publicidad', pregunta: 'Are you already running ads?', opciones: PUBLICIDAD_EN },
+    ]
+  : [
+      { key: 'negocio', pregunta: '¿Qué tipo de negocio tienes?', opciones: NEGOCIOS },
+      { key: 'problema', pregunta: '¿Qué te está frenando?', opciones: PROBLEMAS },
+      { key: 'publicidad', pregunta: '¿Ya inviertes en publicidad?', opciones: PUBLICIDAD },
+    ];
+
+const t = en
+  ? {
+      close: 'Close',
+      title: 'Diagnostic',
+      done: "Done. I'll open WhatsApp with your info.",
+      go: 'Open WhatsApp',
+      note: 'I reply personally. Free, no commitment.',
+      direct: "I'd rather message directly",
+    }
+  : {
+      close: 'Cerrar',
+      title: 'Diagnóstico',
+      done: 'Listo. Te abro WhatsApp con tu información.',
+      go: 'Abrir WhatsApp',
+      note: 'Respondo personalmente. Sin costo ni compromiso.',
+      direct: 'Prefiero escribir directo',
+    };
 ---
 
-<dialog class="diag" id="diagnostico" aria-labelledby="diag-title">
+<dialog class="diag" id="diagnostico" aria-labelledby="diag-title" data-lang={lang}>
   <div class="diag__panel">
-    <button class="diag__close" type="button" data-diag-close aria-label="Cerrar">&times;</button>
+    <button class="diag__close" type="button" data-diag-close aria-label={t.close}>&times;</button>
 
     <div class="diag__progress" aria-hidden="true">
       {steps.map((_, i) => <span class="diag__dot" data-dot={i}></span>)}
     </div>
 
-    <h2 id="diag-title" class="visually-hidden">Diagnóstico</h2>
+    <h2 id="diag-title" class="visually-hidden">{t.title}</h2>
 
     {
       steps.map((step, i) => (
@@ -36,18 +72,16 @@ const steps = [
     <!-- Confirmation step: a real anchor so the tap opens WhatsApp without
          tripping popup blockers. -->
     <div class="diag__step diag__done" data-step="3" hidden>
-      <p class="diag__q">Listo. Te abro WhatsApp con tu información.</p>
+      <p class="diag__q">{t.done}</p>
       <ul class="diag__summary" data-summary></ul>
-      <a class="btn diag__go" data-wa-link href={waDirectLink()} target="_blank" rel="noopener">
-        Abrir WhatsApp
+      <a class="btn diag__go" data-wa-link href={waDirectLink(lang)} target="_blank" rel="noopener">
+        {t.go}
       </a>
-      <p class="diag__note">
-        Respondo personalmente. Sin costo ni compromiso.
-      </p>
+      <p class="diag__note">{t.note}</p>
     </div>
 
-    <a class="diag__escape" href={waDirectLink()} target="_blank" rel="noopener" data-diag-direct>
-      Prefiero escribir directo
+    <a class="diag__escape" href={waDirectLink(lang)} target="_blank" rel="noopener" data-diag-direct>
+      {t.direct}
     </a>
   </div>
 </dialog>
@@ -257,7 +291,8 @@ const steps = [
 
         if (next === 3) {
           // Final step: build the link and the visible summary.
-          const { url } = buildWaLink(WA_NUMBER, answers);
+          const lang = dialog.dataset.lang === 'en' ? 'en' : 'es';
+          const { url } = buildWaLink(WA_NUMBER, answers, lang);
           if (waLink) waLink.href = url;
           if (summaryEl) {
             summaryEl.innerHTML = '';

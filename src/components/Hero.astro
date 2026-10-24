@@ -1,9 +1,29 @@
 ---
 import { url } from '../config';
+import { getLang, href } from '../i18n';
 
 // The gold loop is texture, not proof — the headline says what we do, the
 // footage says what tier we're in. Poster must look finished on its own
 // because iOS in-app browsers routinely block autoplay.
+const lang = getLang(Astro.url);
+const t =
+  lang === 'en'
+    ? {
+        h1a: 'Everyone posts.',
+        h1b: 'Few sell.',
+        lead: 'Video, websites and ad campaigns for businesses that already sell and want to sell more. Cutting-edge tools, with a real person behind every project.',
+        cta: 'Get my diagnostic',
+        ghost: 'See services',
+        micro: ['Free, no commitment', 'Same-day reply'],
+      }
+    : {
+        h1a: 'Todos publican.',
+        h1b: 'Pocos venden.',
+        lead: 'Video, sitios web y campañas publicitarias para negocios que ya venden y quieren vender más. Herramientas de última generación, con una persona real detrás de cada proyecto.',
+        cta: 'Pedir mi diagnóstico',
+        ghost: 'Ver servicios',
+        micro: ['Sin costo ni compromiso', 'Respuesta el mismo día'],
+      };
 ---
 
 <section class="hero">
@@ -25,23 +45,20 @@ import { url } from '../config';
     <!-- Hero entrance is pure CSS, not the JS reveal: this content is above the
          fold and must never depend on a script to become visible. -->
     <h1 class="hero__title hero-in hero-in--lcp">
-      Todos publican.<br /><span class="gold-text">Pocos venden.</span>
+      {t.h1a}<br /><span class="gold-text">{t.h1b}</span>
     </h1>
 
-    <p class="hero__lead lead hero-in" style="--i:1">
-      Video, sitios web y campañas publicitarias para negocios que ya venden y quieren vender
-      más. Herramientas de última generación, con una persona real detrás de cada proyecto.
-    </p>
+    <p class="hero__lead lead hero-in" style="--i:1">{t.lead}</p>
 
     <div class="hero__actions hero-in" style="--i:2">
       <button class="btn" type="button" data-open-diagnostico data-source="hero">
-        Pedir mi diagnóstico
+        {t.cta}
       </button>
-      <a class="btn btn--ghost" href={url("/#servicios")}>Ver servicios</a>
+      <a class="btn btn--ghost" href={href(lang, '/', '#servicios')}>{t.ghost}</a>
     </div>
 
     <p class="hero__micro hero-in" style="--i:3">
-      Sin costo ni compromiso <span class="sep">·</span> Respuesta el mismo día
+      {t.micro[0]} <span class="sep">·</span> {t.micro[1]}
     </p>
   </div>
 
